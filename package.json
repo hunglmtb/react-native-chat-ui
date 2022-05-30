@@ -1,19 +1,16 @@
 {
-  "name": "@flyerhq/react-native-chat-ui",
-  "version": "1.4.3",
+  "name": "@knock/chat-ui",
+  "version": "0.1.0",
   "description": "Actively maintained, community-driven chat UI implementation with an optional Firebase BaaS.",
-  "homepage": "https://flyer.chat",
+  "homepage": "https://www.knockmsg.xyz/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/flyerhq/react-native-chat-ui.git"
+    "url": "https://github.com/hopae-official/knock-chat-ui"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "author": "Oleksandr Demchenko <alexdemchenko@yahoo.com>",
-  "contributors": [
-    "Vitalii Danylov <vitaliidanylov1992@gmail.com>",
-    "Volodymyr Smolianinov <voidozzer@gmail.com>"
-  ],
+  "author": "Hopae Developer <dev@hopae.io>",
+  "contributors": [],
   "license": "Apache-2.0",
   "keywords": [
     "chat",

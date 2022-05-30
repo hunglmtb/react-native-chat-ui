@@ -1,5 +1,5 @@
 {
-  "name": "@knock/chat-ui",
+  "name": "@knockmsg/chat-ui",
   "version": "0.1.0",
   "description": "Actively maintained, community-driven chat UI implementation with an optional Firebase BaaS.",
   "homepage": "https://www.knockmsg.xyz/",

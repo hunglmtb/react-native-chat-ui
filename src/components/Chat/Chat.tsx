@@ -134,6 +134,7 @@ export const Chat = ({
   timeFormat,
   usePreviewData = true,
   user,
+  onAvatarPress,
 }: ChatProps) => {
   const {
     container,
@@ -304,6 +305,7 @@ export const Chat = ({
             showStatus,
             showUserAvatars,
             usePreviewData,
+            onAvatarPress,
           }}
         />
       )
@@ -322,6 +324,7 @@ export const Chat = ({
       size.width,
       usePreviewData,
       user.id,
+      onAvatarPress,
     ]
   )
 

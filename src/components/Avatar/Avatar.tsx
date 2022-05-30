@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View, Pressable } from 'react-native'
 
 import { MessageType, Theme } from '../../types'
 import { getUserAvatarNameColor, getUserInitials } from '../../utils'
@@ -11,12 +11,14 @@ export const Avatar = React.memo(
     showAvatar,
     showUserAvatars,
     theme,
+    onAvatarPress,
   }: {
     author: MessageType.Any['author']
     currentUserIsAuthor: boolean
     showAvatar: boolean
     showUserAvatars?: boolean
     theme: Theme
+    onAvatarPress?: (author: MessageType.Any['author']) => void
   }) => {
     const renderAvatar = () => {
       const color = getUserAvatarNameColor(
@@ -47,9 +49,12 @@ export const Avatar = React.memo(
     }
 
     return !currentUserIsAuthor && showUserAvatars ? (
-      <View testID='AvatarContainer'>
+      <Pressable
+        testID='AvatarContainer'
+        onPress={onAvatarPress ? () => onAvatarPress?.(author) : undefined}
+      >
         {showAvatar ? renderAvatar() : <View style={styles.placeholder} />}
-      </View>
+      </Pressable>
     ) : null
   }
 )

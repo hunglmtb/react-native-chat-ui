@@ -1,28 +1,29 @@
-import { StyleSheet } from 'react-native'
-
-import { Theme } from '../../types'
+import { StyleSheet } from 'react-native';
+import { Theme } from '../../types';
 
 export default ({ theme }: { theme: Theme }) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.background,
       flex: 1,
+      ...theme.list.container,
     },
     emptyComponentContainer: {
       alignItems: 'center',
-      marginHorizontal: 24,
+      justifyContent: 'center',
       transform: [{ rotateX: '180deg' }],
+      height: '100%',
+      width: '100%',
     },
     emptyComponentTitle: {
-      ...theme.fonts.emptyChatPlaceholderTextStyle,
-      textAlign: 'center',
+      ...theme.list.emptyChatPlaceholderText,
     },
     flatList: {
-      backgroundColor: theme.colors.background,
-      height: '100%',
+      flex: 1,
+      ...theme.list.container,
     },
     flatListContentContainer: {
       flexGrow: 1,
+      ...theme.list.contentContainer,
     },
     footer: {
       height: 16,
@@ -33,12 +34,9 @@ export default ({ theme }: { theme: Theme }) =>
       marginTop: 16,
       height: 32,
     },
-    header: {
-      height: 4,
+    headerIsTyping: {
+      marginBottom: theme.bubble.containerLeft.marginLeft,
+      marginLeft: theme.bubble.containerLeft.marginLeft,
+      justifyContent: 'center',
     },
-    keyboardAccessoryView: {
-      backgroundColor: theme.colors.inputBackground,
-      borderTopLeftRadius: theme.borders.inputBorderRadius,
-      borderTopRightRadius: theme.borders.inputBorderRadius,
-    },
-  })
+  });

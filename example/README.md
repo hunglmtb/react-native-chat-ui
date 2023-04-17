@@ -3,7 +3,7 @@
 ## Getting Started
 
 ```bash
-yarn
+npm install
 ```
 
 for iOS:
@@ -15,13 +15,13 @@ npx pod-install
 To run the app use:
 
 ```bash
-yarn ios
+run run ios
 ```
 
 or
 
 ```bash
-yarn android
+npm run android
 ```
 
 ## Updating project
@@ -44,7 +44,7 @@ yarn android
 
 ```json
 "generate-messages": "node scripts/generateMessages.js",
-"prepare": "yarn generate-messages",
+"prepare": "npm run generate-messages",
 ```
 
 7. Check the difference in `metro.config.js` and combine all

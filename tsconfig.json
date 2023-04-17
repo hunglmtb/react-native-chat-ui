@@ -1,18 +1,44 @@
+// prettier-ignore
 {
+  "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
-    "declaration": true,
+    "allowJs": true,
+    "alwaysStrict": true,
+    "baseUrl": "./src",
+    "paths": {
+      "app": ["./app/*", "./app/"],
+      "components": ["./components/*", "./components/"],
+      "config": ["./config/*", "./config"],
+      "firestore": ["./firestore/*", "./firestore/"],
+      "img": ["./theme/img/*", "./theme/img/"],
+      "lib": ["./lib/*", "./lib"],
+      "store": ["./store/*", "./store"],
+      "theme": ["./theme/*", "./theme"],
+      "types": ["./types/*", "./types/"],
+    },
     "esModuleInterop": true,
-    "jsx": "react",
-    "lib": ["ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "noEmitOnError": true,
-    "outDir": "./lib",
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": [
+      "es2017",
+      "dom",
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
-    "sourceMap": true,
     "strict": true,
-    "target": "ES2018",
+    //"target": "esnext"
   },
-  "exclude": ["**/__tests__/*"],
+  "exclude": [
+    "**/__tests__/*",
+    "node_modules",
+    "e2e"
+  ],
   "include": ["src"]
 }

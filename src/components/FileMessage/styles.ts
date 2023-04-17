@@ -1,35 +1,39 @@
-import { StyleSheet } from 'react-native'
+import { MessageType, Theme, User } from '../../types';
 
-import { MessageType, Theme, User } from '../../types'
+import { StyleSheet } from 'react-native';
 
 const styles = ({
   message,
   theme,
   user,
 }: {
-  message: MessageType.DerivedFile
-  theme: Theme
-  user?: User
-}) =>
-  StyleSheet.create({
+  message: MessageType.DerivedFile;
+  theme: Theme;
+  user?: User;
+}) => {
+  const restContainer =
+    user?.id === message.author.id
+      ? theme.bubble.fileRightContainer
+      : theme.bubble.fileLeftContainer;
+
+  return StyleSheet.create({
     container: {
       alignItems: 'center',
       flexDirection: 'row',
-      padding: theme.insets.messageInsetsVertical,
-      paddingRight: theme.insets.messageInsetsHorizontal,
+      ...restContainer,
     },
     icon: {
       tintColor:
         user?.id === message.author.id
-          ? theme.colors.sentMessageDocumentIcon
-          : theme.colors.receivedMessageDocumentIcon,
+          ? theme.bubble.documentIconRightColor
+          : theme.bubble.documentIconLeftColor,
     },
     iconContainer: {
       alignItems: 'center',
       backgroundColor:
         user?.id === message.author.id
-          ? `${String(theme.colors.sentMessageDocumentIcon)}33`
-          : `${String(theme.colors.receivedMessageDocumentIcon)}33`,
+          ? `${String(theme.bubble.documentIconRightColor)}33`
+          : `${String(theme.bubble.documentIconLeftColor)}33`,
       borderRadius: 21,
       height: 42,
       justifyContent: 'center',
@@ -37,18 +41,19 @@ const styles = ({
     },
     name:
       user?.id === message.author.id
-        ? theme.fonts.sentMessageBodyTextStyle
-        : theme.fonts.receivedMessageBodyTextStyle,
+        ? theme.bubble.bodyTextRight
+        : theme.bubble.bodyTextLeft,
     size: {
       ...(user?.id === message.author.id
-        ? theme.fonts.sentMessageCaptionTextStyle
-        : theme.fonts.receivedMessageCaptionTextStyle),
+        ? theme.bubble.captionTextRight
+        : theme.bubble.captionTextLeft),
       marginTop: 4,
     },
     textContainer: {
       flexShrink: 1,
       marginLeft: 16,
     },
-  })
+  });
+};
 
-export default styles
+export default styles;

@@ -1,44 +1,38 @@
-import { StyleSheet } from 'react-native'
+import { MessageType, Theme, User } from '../../types';
 
-import { MessageType, Theme, User } from '../../types'
-import { getUserAvatarNameColor } from '../../utils'
+import { StyleSheet } from 'react-native';
+import { getUserAvatarNameColor } from '../../utils';
 
 const styles = ({
   message,
   theme,
   user,
 }: {
-  message: MessageType.Text
-  theme: Theme
-  user?: User
+  message: MessageType.Text;
+  theme: Theme;
+  user?: User;
 }) =>
   StyleSheet.create({
-    descriptionText: {
-      ...(user?.id === message.author.id
-        ? theme.fonts.sentMessageLinkDescriptionTextStyle
-        : theme.fonts.receivedMessageLinkDescriptionTextStyle),
-      marginTop: 4,
-    },
+    descriptionText:
+      user?.id === message.author.id
+        ? theme.bubble.linkDescriptionTextRight
+        : theme.bubble.linkDescriptionTextLeft,
     headerText: {
-      ...theme.fonts.userNameTextStyle,
-      color: getUserAvatarNameColor(
-        message.author,
-        theme.colors.userAvatarNameColors
-      ),
-      marginBottom: 6,
+      ...theme.bubble.headerText,
+      color: getUserAvatarNameColor(message.author, theme.avatar.colors),
     },
     titleText:
       user?.id === message.author.id
-        ? theme.fonts.sentMessageLinkTitleTextStyle
-        : theme.fonts.receivedMessageLinkTitleTextStyle,
+        ? theme.bubble.linkTitleTextRight
+        : theme.bubble.linkTitleTextLeft,
     text:
       user?.id === message.author.id
-        ? theme.fonts.sentMessageBodyTextStyle
-        : theme.fonts.receivedMessageBodyTextStyle,
-    textContainer: {
-      marginHorizontal: theme.insets.messageInsetsHorizontal,
-      marginVertical: theme.insets.messageInsetsVertical,
-    },
-  })
+        ? theme.bubble.messageTextRight
+        : theme.bubble.messageTextLeft,
+    textContainer:
+      user?.id === message.author.id
+        ? theme.bubble.textRightContainer
+        : theme.bubble.textLeftContainer,
+  });
 
-export default styles
+export default styles;

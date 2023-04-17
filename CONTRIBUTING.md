@@ -17,7 +17,7 @@ Code-level contributions to Flyer Chat generally come in the form of pull reques
 
 [Here](https://opensource.guide/how-to-contribute/#opening-a-pull-request) you can read how to open a pull request.
 
-Please read [this section](https://github.com/demchenkoalex/react-native-module-template#how-to-see-my-changes-immediately-in-the-example) of the template library we use so the hot reload works for you when you are changing source files. Run `yarn` in the root folder to install dependencies for the library and `yarn` / `npx pod-install` in the `example` folder to install dependencies for the example project. After you are done with the changes, run `yarn compile`, `yarn lint` and `yarn type-coverage` in the root folder to make sure your code is consistent with our style.
+Please read [this section](https://github.com/demchenkoalex/react-native-module-template#how-to-see-my-changes-immediately-in-the-example) of the template library we use so the hot reload works for you when you are changing source files. Run `npm i` in the root folder to install dependencies for the library and `npx pod-install` in the `example` folder to install dependencies for the example project. After you are done with the changes, run `npm run compile`, `npm run lint` and `npm run type-coverage` in the root folder to make sure your code is consistent with our style.
  
 ## Community Contributions
 

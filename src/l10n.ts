@@ -56,4 +56,4 @@ export const l10n = {
     inputPlaceholder: 'Повідомлення',
     sendButtonAccessibilityLabel: 'Надіслати',
   },
-}
+};

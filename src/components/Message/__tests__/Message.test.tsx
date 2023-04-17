@@ -1,12 +1,12 @@
-import { render } from '@testing-library/react-native'
-import * as React from 'react'
+import * as React from 'react';
 
-import { derivedTextMessage } from '../../../../jest/fixtures'
-import { Message } from '../Message'
+import { Message } from '../Message';
+import { derivedTextMessage } from '../../../../jest/fixtures';
+import { render } from '@testing-library/react-native';
 
 describe('message', () => {
   it('renders undefined in ContentContainer', () => {
-    expect.assertions(2)
+    expect.assertions(2);
     const { getByTestId } = render(
       <Message
         message={{ ...derivedTextMessage, type: 'custom' }}
@@ -16,15 +16,15 @@ describe('message', () => {
         showAvatar
         showName
         showStatus
-      />
-    )
-    const ContentContainer = getByTestId('ContentContainer')
-    expect(ContentContainer).toBeDefined()
-    expect(ContentContainer).toHaveProperty('props.children[0]', undefined)
-  })
+      />,
+    );
+    const ContentContainer = getByTestId('ContentContainer');
+    expect(ContentContainer).toBeDefined();
+    expect(ContentContainer).toHaveProperty('props.children[0]', undefined);
+  });
 
   it('renders undefined in ContentContainer with wrong message type', () => {
-    expect.assertions(2)
+    expect.assertions(2);
     const { getByTestId } = render(
       <Message
         message={{ ...derivedTextMessage, type: 'unsupported' }}
@@ -34,10 +34,10 @@ describe('message', () => {
         showAvatar
         showName
         showStatus
-      />
-    )
-    const ContentContainer = getByTestId('ContentContainer')
-    expect(ContentContainer).toBeDefined()
-    expect(ContentContainer).toHaveProperty('props.children[0]', undefined)
-  })
-})
+      />,
+    );
+    const ContentContainer = getByTestId('ContentContainer');
+    expect(ContentContainer).toBeDefined();
+    expect(ContentContainer).toHaveProperty('props.children[0]', undefined);
+  });
+});

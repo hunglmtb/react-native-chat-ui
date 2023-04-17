@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native'
+import { MessageType, Theme, User } from '../../types';
 
-import { MessageType, Theme, User } from '../../types'
+import { StyleSheet } from 'react-native';
 
 const styles = ({
   aspectRatio,
@@ -9,13 +9,18 @@ const styles = ({
   theme,
   user,
 }: {
-  aspectRatio: number
-  message: MessageType.Image
-  messageWidth: number
-  theme: Theme
-  user?: User
-}) =>
-  StyleSheet.create({
+  aspectRatio: number;
+  message: MessageType.Image;
+  messageWidth: number;
+  theme: Theme;
+  user?: User;
+}) => {
+  const restTextContainer =
+    user?.id === message.author.id
+      ? theme.bubble.textRightContainer
+      : theme.bubble.textLeftContainer;
+
+  return StyleSheet.create({
     horizontalImage: {
       height: messageWidth / aspectRatio,
       maxHeight: messageWidth,
@@ -24,9 +29,9 @@ const styles = ({
     minimizedImage: {
       borderRadius: 15,
       height: 64,
-      marginLeft: theme.insets.messageInsetsVertical,
+      marginLeft: restTextContainer.marginLeft,
       marginRight: 16,
-      marginVertical: theme.insets.messageInsetsVertical,
+      marginVertical: restTextContainer.marginVertical,
       width: 64,
     },
     minimizedImageContainer: {
@@ -39,24 +44,22 @@ const styles = ({
     },
     nameText:
       user?.id === message.author.id
-        ? theme.fonts.sentMessageBodyTextStyle
-        : theme.fonts.receivedMessageBodyTextStyle,
+        ? theme.bubble.bodyTextRight
+        : theme.bubble.bodyTextLeft,
     sizeText: {
       ...(user?.id === message.author.id
-        ? theme.fonts.sentMessageCaptionTextStyle
-        : theme.fonts.receivedMessageCaptionTextStyle),
-      marginTop: 4,
+        ? theme.bubble.captionTextRight
+        : theme.bubble.captionTextLeft),
     },
     textContainer: {
       flexShrink: 1,
-      marginRight: theme.insets.messageInsetsHorizontal,
-      marginVertical: theme.insets.messageInsetsVertical,
+      ...restTextContainer,
     },
     verticalImage: {
       height: messageWidth,
       minWidth: 170,
       width: messageWidth * aspectRatio,
     },
-  })
-
-export default styles
+  });
+};
+export default styles;

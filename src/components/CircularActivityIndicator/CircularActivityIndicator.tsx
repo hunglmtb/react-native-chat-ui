@@ -1,27 +1,20 @@
-import * as React from 'react'
-import {
-  Animated,
-  ColorValue,
-  Easing,
-  StyleProp,
-  ViewStyle,
-} from 'react-native'
+import * as React from 'react';
 
-import styles from './styles'
+import { Animated, ColorValue, Easing } from 'react-native';
+
+import styles from './styles';
 
 export interface CircularActivityIndicatorProps {
-  color: ColorValue
-  size?: number
-  style?: StyleProp<ViewStyle>
+  color: ColorValue;
+  size?: number;
 }
 
 export const CircularActivityIndicator = ({
   color,
   size = 24,
-  style,
 }: CircularActivityIndicatorProps) => {
-  const spinValue = React.useRef(new Animated.Value(0)).current
-  const { circle } = styles({ color, size })
+  const spinValue = React.useRef(new Animated.Value(0)).current;
+  const { circle } = styles({ color, size });
 
   React.useEffect(() => {
     Animated.loop(
@@ -30,10 +23,10 @@ export const CircularActivityIndicator = ({
         duration: 600,
         easing: Easing.linear,
         useNativeDriver: true,
-      })
-    ).start()
+      }),
+    ).start();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   return (
     <Animated.View
@@ -49,9 +42,8 @@ export const CircularActivityIndicator = ({
           ],
         },
         circle,
-        style,
       ]}
-      testID='CircularActivityIndicator'
+      testID="CircularActivityIndicator"
     />
-  )
-}
+  );
+};

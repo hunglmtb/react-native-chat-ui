@@ -8,7 +8,7 @@
     "generate-messages": "node scripts/generateMessages.js",
     "ios": "react-native run-ios  --simulator 'iPhone 14'",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "prepare": "yarn generate-messages",
+    "prepare": "npm run generate-messages",
     "start": "react-native start",
     "test": "jest"
   },

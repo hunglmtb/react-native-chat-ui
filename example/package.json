@@ -6,7 +6,7 @@
     "android": "react-native run-android",
     "compile": "tsc -p .",
     "generate-messages": "node scripts/generateMessages.js",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios  --simulator 'iPhone 14'",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "yarn generate-messages",
     "start": "react-native start",

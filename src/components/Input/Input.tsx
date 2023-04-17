@@ -81,14 +81,14 @@ export const Input = ({
   };
 
   return (
-    <View style={[container, theme.composer.container]} onLayout={onLayout}>
+    <View style={[container, theme.composer?.container]} onLayout={onLayout}>
       {user &&
         (isAttachmentUploading ? (
           <View style={marginRight}>
             <CircularActivityIndicator
               {...{
-                color: theme.composer.activityIndicator.color,
-                size: theme.composer.activityIndicator.size,
+                color: theme.composer?.activityIndicator?.color,
+                size: theme.composer?.activityIndicator?.size,
               }}
             />
           </View>
@@ -103,7 +103,7 @@ export const Input = ({
       <TextInput
         multiline
         placeholder={l10n.inputPlaceholder}
-        placeholderTextColor={theme.composer.inputStyle.color}
+        placeholderTextColor={theme.composer?.inputStyle?.color}
         underlineColorAndroid="transparent"
         // Keep our implementation but allow user to use these `TextInputProps`
         style={input}

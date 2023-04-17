@@ -13,8 +13,8 @@ const styles = ({
 }) => {
   const restContainer =
     user?.id === message.author.id
-      ? theme.bubble.fileRightContainer
-      : theme.bubble.fileLeftContainer;
+      ? theme.bubble?.fileRightContainer
+      : theme.bubble?.fileLeftContainer;
 
   return StyleSheet.create({
     container: {
@@ -25,28 +25,29 @@ const styles = ({
     icon: {
       tintColor:
         user?.id === message.author.id
-          ? theme.bubble.documentIconRightColor
-          : theme.bubble.documentIconLeftColor,
+          ? theme.bubble?.documentIconRightColor
+          : theme.bubble?.documentIconLeftColor,
     },
     iconContainer: {
       alignItems: 'center',
       backgroundColor:
         user?.id === message.author.id
-          ? `${String(theme.bubble.documentIconRightColor)}33`
-          : `${String(theme.bubble.documentIconLeftColor)}33`,
+          ? `${String(theme.bubble?.documentIconRightColor)}33`
+          : `${String(theme.bubble?.documentIconLeftColor)}33`,
       borderRadius: 21,
       height: 42,
       justifyContent: 'center',
       width: 42,
     },
-    name:
-      user?.id === message.author.id
-        ? theme.bubble.bodyTextRight
-        : theme.bubble.bodyTextLeft,
+    name: {
+      ...(user?.id === message.author.id
+        ? theme.bubble?.bodyTextRight
+        : theme.bubble?.bodyTextLeft),
+    },
     size: {
       ...(user?.id === message.author.id
-        ? theme.bubble.captionTextRight
-        : theme.bubble.captionTextLeft),
+        ? theme.bubble?.captionTextRight
+        : theme.bubble?.captionTextLeft),
       marginTop: 4,
     },
     textContainer: {

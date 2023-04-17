@@ -145,55 +145,55 @@ export type UsernameLocation = 'none' | 'inside' | 'outside';
 /** Base chat theme containing all required properties to make a theme.
  * Implement this interface if you want to create a custom theme. */
 export interface Theme {
-  avatar: ThemeAvatar;
-  bubble: ThemeBubble;
-  colors: ThemeColors;
-  composer: ThemeComposer;
-  date: ThemeDate;
+  avatar?: ThemeAvatar;
+  bubble?: ThemeBubble;
+  colors?: ThemeColors;
+  composer?: ThemeComposer;
+  date?: ThemeDate;
   icons?: ThemeIcons;
-  list: ThemeList;
-  statusIcon: ThemeStatusIcon;
-  typingIndicator: ThemeTypingIndicator;
+  list?: ThemeList;
+  statusIcon?: ThemeStatusIcon;
+  typingIndicator?: ThemeTypingIndicator;
 }
 
 export interface ThemeAvatar {
-  colors: ColorValue[];
-  imageBackgroundColor: ColorValue;
-  text: TextStyle;
+  colors?: ColorValue[];
+  imageBackgroundColor?: ColorValue;
+  text?: TextStyle;
 }
 
 export interface ThemeBubble {
-  bodyTextLeft: TextStyle;
-  bodyTextRight: TextStyle;
-  captionTextLeft: TextStyle;
-  captionTextRight: TextStyle;
-  containerLeft: ViewStyle;
-  containerRight: ViewStyle;
-  contentLeftContainer: ViewStyle;
-  contentRightContainer: ViewStyle;
-  documentIconLeftColor: ColorValue;
-  documentIconRightColor: ColorValue;
-  fileLeftContainer: TextStyle;
-  fileRightContainer: TextStyle;
-  headerText: TextStyle;
-  linkDescriptionTextLeft: TextStyle;
-  linkDescriptionTextRight: TextStyle;
-  linkTitleTextLeft: TextStyle;
-  linkTitleTextRight: TextStyle;
-  messageTextLeft: TextStyle;
-  messageTextRight: TextStyle;
-  textLeftContainer: TextStyle;
-  textRightContainer: TextStyle;
+  bodyTextLeft?: TextStyle;
+  bodyTextRight?: TextStyle;
+  captionTextLeft?: TextStyle;
+  captionTextRight?: TextStyle;
+  containerLeft?: ViewStyle;
+  containerRight?: ViewStyle;
+  contentLeftContainer?: ViewStyle;
+  contentRightContainer?: ViewStyle;
+  documentIconLeftColor?: ColorValue;
+  documentIconRightColor?: ColorValue;
+  fileLeftContainer?: TextStyle;
+  fileRightContainer?: TextStyle;
+  headerText?: TextStyle;
+  linkDescriptionTextLeft?: TextStyle;
+  linkDescriptionTextRight?: TextStyle;
+  linkTitleTextLeft?: TextStyle;
+  linkTitleTextRight?: TextStyle;
+  messageTextLeft?: TextStyle;
+  messageTextRight?: TextStyle;
+  textLeftContainer?: TextStyle;
+  textRightContainer?: TextStyle;
 }
 
 export interface ThemeColors {
-  error: ColorValue;
-  primary: ColorValue;
-  secondary: ColorValue;
+  error?: ColorValue;
+  primary?: ColorValue;
+  secondary?: ColorValue;
 }
 
 export interface ThemeDate {
-  text: TextStyle;
+  text?: TextStyle;
 }
 
 export interface ThemeIcons {
@@ -207,39 +207,39 @@ export interface ThemeIcons {
 }
 
 export interface ThemeComposer {
-  activityIndicator: {
-    color: ColorValue;
-    size: number;
+  activityIndicator?: {
+    color?: ColorValue;
+    size?: number;
   };
-  attachmentIcon: ImageStyle;
-  container: ViewStyle;
-  contentOffsetKeyboardOpened: number;
-  inputStyle: TextStyle;
-  sendIcon: ImageStyle;
-  tabBarHeight: number;
+  attachmentIcon?: ImageStyle;
+  container?: ViewStyle;
+  contentOffsetKeyboardOpened?: number;
+  inputStyle?: TextStyle;
+  sendIcon?: ImageStyle;
+  tabBarHeight?: number;
 }
 
 export interface ThemeList {
-  activityIndicator: {
-    color: ColorValue;
-    size: number;
+  activityIndicator?: {
+    color?: ColorValue;
+    size?: number;
   };
-  container: ViewStyle;
-  contentContainer: ViewStyle;
-  emptyChatPlaceholderText: TextStyle;
+  container?: ViewStyle;
+  contentContainer?: ViewStyle;
+  emptyChatPlaceholderText?: TextStyle;
 }
 
 export interface ThemeStatusIcon {
-  activityIndicator: {
-    color: ColorValue;
-    size: number;
+  activityIndicator?: {
+    color?: ColorValue;
+    size?: number;
   };
-  image: ImageStyle;
-  imageError: ImageStyle;
+  image?: ImageStyle;
+  imageError?: ImageStyle;
 }
 
 export interface ThemeTypingIndicator {
-  dotColor: ColorValue;
+  dotColor?: ColorValue;
 }
 
 export interface User {

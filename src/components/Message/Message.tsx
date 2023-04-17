@@ -112,7 +112,7 @@ export const Message = React.memo(
     if (message.type === 'dateHeader') {
       return (
         <View style={dateHeader}>
-          <Text style={theme.date.text}>{message.text}</Text>
+          <Text style={theme.date?.text}>{message.text}</Text>
         </View>
       );
     }
@@ -201,7 +201,7 @@ export const Message = React.memo(
 
     const renderUsername = () => {
       return (
-        <Text numberOfLines={1} style={theme.bubble.headerText}>
+        <Text numberOfLines={1} style={theme.bubble?.headerText}>
           {getUserName(message.author)}
         </Text>
       );

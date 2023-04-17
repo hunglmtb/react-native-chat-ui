@@ -14,7 +14,7 @@ export default ({ theme }: { theme: Theme }) =>
       maxHeight: 100,
       minHeight: 25,
       paddingHorizontal: 10,
-      ...theme.composer.inputStyle,
+      ...theme.composer?.inputStyle,
 
       // Fixes default paddings for Android
       paddingBottom: 0,

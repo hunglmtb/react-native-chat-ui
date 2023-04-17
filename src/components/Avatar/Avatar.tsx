@@ -19,7 +19,7 @@ export const Avatar = React.memo(
     theme: Theme;
   }) => {
     const renderAvatar = () => {
-      const color = getUserAvatarNameColor(author, theme.avatar.colors);
+      const color = getUserAvatarNameColor(author, theme.avatar?.colors);
       const initials = getUserInitials(author);
 
       if (author.imageUrl) {
@@ -30,7 +30,7 @@ export const Avatar = React.memo(
             source={{ uri: author.imageUrl }}
             style={[
               styles.image,
-              { backgroundColor: theme.avatar.imageBackgroundColor },
+              { backgroundColor: theme.avatar?.imageBackgroundColor },
             ]}
           />
         );
@@ -38,7 +38,7 @@ export const Avatar = React.memo(
 
       return (
         <View style={[styles.avatarBackground, { backgroundColor: color }]}>
-          <Text style={theme.avatar.text}>{initials}</Text>
+          <Text style={theme.avatar?.text}>{initials}</Text>
         </View>
       );
     };

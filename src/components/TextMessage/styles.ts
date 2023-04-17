@@ -13,26 +13,30 @@ const styles = ({
   user?: User;
 }) =>
   StyleSheet.create({
-    descriptionText:
-      user?.id === message.author.id
-        ? theme.bubble.linkDescriptionTextRight
-        : theme.bubble.linkDescriptionTextLeft,
-    headerText: {
-      ...theme.bubble.headerText,
-      color: getUserAvatarNameColor(message.author, theme.avatar.colors),
+    descriptionText: {
+      ...(user?.id === message.author.id
+        ? theme.bubble?.linkDescriptionTextRight
+        : theme.bubble?.linkDescriptionTextLeft),
     },
-    titleText:
-      user?.id === message.author.id
-        ? theme.bubble.linkTitleTextRight
-        : theme.bubble.linkTitleTextLeft,
-    text:
-      user?.id === message.author.id
-        ? theme.bubble.messageTextRight
-        : theme.bubble.messageTextLeft,
-    textContainer:
-      user?.id === message.author.id
-        ? theme.bubble.textRightContainer
-        : theme.bubble.textLeftContainer,
+    headerText: {
+      ...theme.bubble?.headerText,
+      color: getUserAvatarNameColor(message.author, theme.avatar?.colors),
+    },
+    titleText: {
+      ...(user?.id === message.author.id
+        ? theme.bubble?.linkTitleTextRight
+        : theme.bubble?.linkTitleTextLeft),
+    },
+    text: {
+      ...(user?.id === message.author.id
+        ? theme.bubble?.messageTextRight
+        : theme.bubble?.messageTextLeft),
+    },
+    textContainer: {
+      ...(user?.id === message.author.id
+        ? theme.bubble?.textRightContainer
+        : theme.bubble?.textLeftContainer),
+    },
   });
 
 export default styles;

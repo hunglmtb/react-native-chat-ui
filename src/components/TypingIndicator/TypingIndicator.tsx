@@ -74,7 +74,7 @@ export const TypingIndicator = React.memo(
           <TypingAnimation
             dotRadius={4}
             dotMargin={5.5}
-            dotColor={theme.typingIndicator.dotColor as string}
+            dotColor={theme.typingIndicator?.dotColor as string}
           />
         </View>
       </Animated.View>

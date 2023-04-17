@@ -17,8 +17,8 @@ const styles = ({
 }) => {
   const restTextContainer =
     user?.id === message.author.id
-      ? theme.bubble.textRightContainer
-      : theme.bubble.textLeftContainer;
+      ? theme.bubble?.textRightContainer
+      : theme.bubble?.textLeftContainer;
 
   return StyleSheet.create({
     horizontalImage: {
@@ -29,27 +29,28 @@ const styles = ({
     minimizedImage: {
       borderRadius: 15,
       height: 64,
-      marginLeft: restTextContainer.marginLeft,
+      marginLeft: restTextContainer?.marginLeft,
       marginRight: 16,
-      marginVertical: restTextContainer.marginVertical,
+      marginVertical: restTextContainer?.marginVertical,
       width: 64,
     },
     minimizedImageContainer: {
       alignItems: 'center',
       backgroundColor:
         user?.id === message.author.id
-          ? theme.colors.primary
-          : theme.colors.secondary,
+          ? theme.colors?.primary
+          : theme.colors?.secondary,
       flexDirection: 'row',
     },
-    nameText:
-      user?.id === message.author.id
-        ? theme.bubble.bodyTextRight
-        : theme.bubble.bodyTextLeft,
+    nameText: {
+      ...(user?.id === message.author.id
+        ? theme.bubble?.bodyTextRight
+        : theme.bubble?.bodyTextLeft),
+    },
     sizeText: {
       ...(user?.id === message.author.id
-        ? theme.bubble.captionTextRight
-        : theme.bubble.captionTextLeft),
+        ? theme.bubble?.captionTextRight
+        : theme.bubble?.captionTextLeft),
     },
     textContainer: {
       flexShrink: 1,

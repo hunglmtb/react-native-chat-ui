@@ -5,7 +5,7 @@ export default ({ theme }: { theme: Theme }) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      ...theme.list.container,
+      ...theme.list?.container,
     },
     emptyComponentContainer: {
       alignItems: 'center',
@@ -15,15 +15,15 @@ export default ({ theme }: { theme: Theme }) =>
       width: '100%',
     },
     emptyComponentTitle: {
-      ...theme.list.emptyChatPlaceholderText,
+      ...theme.list?.emptyChatPlaceholderText,
     },
     flatList: {
       flex: 1,
-      ...theme.list.container,
+      ...theme.list?.container,
     },
     flatListContentContainer: {
       flexGrow: 1,
-      ...theme.list.contentContainer,
+      ...theme.list?.contentContainer,
     },
     footer: {
       height: 16,
@@ -35,8 +35,8 @@ export default ({ theme }: { theme: Theme }) =>
       height: 32,
     },
     headerIsTyping: {
-      marginBottom: theme.bubble.containerLeft.marginLeft,
-      marginLeft: theme.bubble.containerLeft.marginLeft,
+      marginBottom: theme.bubble?.containerLeft?.marginLeft,
+      marginLeft: theme.bubble?.containerLeft?.marginLeft,
       justifyContent: 'center',
     },
   });

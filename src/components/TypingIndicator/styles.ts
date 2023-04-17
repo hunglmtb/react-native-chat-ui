@@ -9,14 +9,14 @@ const styles = ({ theme }: { theme: Theme }) =>
       width: 58,
       paddingLeft: 12,
       paddingTop: 8,
-      borderRadius: theme.bubble.contentLeftContainer.borderRadius,
+      borderRadius: theme.bubble?.contentLeftContainer?.borderRadius,
       borderBottomLeftRadius: 0,
-      backgroundColor: theme.bubble.contentLeftContainer.backgroundColor,
-      ...theme.bubble.contentLeftContainer,
+      backgroundColor: theme.bubble?.contentLeftContainer?.backgroundColor,
+      ...theme.bubble?.contentLeftContainer,
     },
     container: {},
     namesText: {
-      ...theme.bubble.headerText,
+      ...theme.bubble?.headerText,
       marginLeft: 8,
     },
   });

@@ -16,11 +16,11 @@ const styles = ({
   theme: Theme;
 }) => {
   const restContainer = currentUserIsAuthor
-    ? theme.bubble.containerRight
-    : theme.bubble.containerLeft;
+    ? theme.bubble?.containerRight
+    : theme.bubble?.containerLeft;
   const restContentContainer = currentUserIsAuthor
-    ? theme.bubble.contentRightContainer
-    : theme.bubble.contentLeftContainer;
+    ? theme.bubble?.contentRightContainer
+    : theme.bubble?.contentLeftContainer;
 
   return StyleSheet.create({
     container: {
@@ -33,26 +33,26 @@ const styles = ({
       marginBottom: message.type === 'dateHeader' ? 0 : 4 + message.offset,
       marginLeft: currentUserIsAuthor
         ? 0
-        : theme.bubble.containerLeft.marginLeft || 0,
+        : theme.bubble?.containerLeft?.marginLeft || 0,
       marginRight: currentUserIsAuthor
-        ? theme.bubble.containerRight.marginRight || 0
+        ? theme.bubble?.containerRight?.marginRight || 0
         : 0,
     },
     contentContainer: {
       overflow: 'hidden',
       borderBottomLeftRadius:
         currentUserIsAuthor || roundBorder
-          ? theme.bubble.contentRightContainer.borderBottomLeftRadius
+          ? theme.bubble?.contentRightContainer?.borderBottomLeftRadius
           : 0,
       borderBottomRightRadius: currentUserIsAuthor
         ? roundBorder
-          ? theme.bubble.contentRightContainer.borderBottomRightRadius
+          ? theme.bubble?.contentRightContainer?.borderBottomRightRadius
           : 0
-        : theme.bubble.contentLeftContainer.borderBottomLeftRadius,
+        : theme.bubble?.contentLeftContainer?.borderBottomLeftRadius,
       borderColor: 'transparent',
       borderRadius: currentUserIsAuthor
-        ? theme.bubble.contentRightContainer.borderRadius
-        : theme.bubble.contentLeftContainer.borderRadius,
+        ? theme.bubble?.contentRightContainer?.borderRadius
+        : theme.bubble?.contentLeftContainer?.borderRadius,
       ...restContentContainer,
     },
     dateHeader: {
@@ -67,7 +67,7 @@ const styles = ({
     username: {
       // See Message Avatar style. margin + width + marginRight + some additional padding
       marginLeft:
-        typeof theme.bubble.containerLeft === 'number'
+        typeof theme.bubble?.containerLeft === 'number'
           ? theme.bubble.containerLeft + 32 + 8 + 20
           : 32 + 8 + 20,
     },

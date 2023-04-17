@@ -5,12 +5,12 @@ import { Animated, ColorValue, Easing } from 'react-native';
 import styles from './styles';
 
 export interface CircularActivityIndicatorProps {
-  color: ColorValue;
+  color?: ColorValue;
   size?: number;
 }
 
 export const CircularActivityIndicator = ({
-  color,
+  color = '#000000',
   size = 24,
 }: CircularActivityIndicatorProps) => {
   const spinValue = React.useRef(new Animated.Value(0)).current;

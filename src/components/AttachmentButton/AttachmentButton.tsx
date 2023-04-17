@@ -39,7 +39,7 @@ export const AttachmentButton = ({
       {theme.icons?.attachmentButtonIcon?.() ?? (
         <Image
           source={require('../../assets/icon-attachment.png')}
-          style={[styles.image, theme.composer.attachmentIcon]}
+          style={[styles.image, theme.composer?.attachmentIcon]}
         />
       )}
     </TouchableOpacity>

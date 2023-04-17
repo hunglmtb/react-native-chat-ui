@@ -34,6 +34,7 @@ import calendar from 'dayjs/plugin/calendar';
 import dayjs from 'dayjs';
 import { defaultTheme } from '../../theme';
 import { l10n } from '../../l10n';
+import lodash from 'lodash';
 import { oneOf } from '@flyerhq/react-native-link-preview';
 import styles from './styles';
 import { usePrevious } from '../../hooks';
@@ -147,6 +148,9 @@ export const Chat = ({
   usePreviewData = true,
   user,
 }: ChatProps) => {
+  // Merge callers theme changes with the default theme.
+  theme = lodash.merge(defaultTheme, theme);
+
   const {
     container,
     emptyComponentContainer,
@@ -360,8 +364,8 @@ export const Chat = ({
       isNextPageLoading ? (
         <View style={footerLoadingPage}>
           <CircularActivityIndicator
-            color={theme.list.activityIndicator.color}
-            size={theme.list.activityIndicator.size}
+            color={theme.list?.activityIndicator?.color}
+            size={theme.list?.activityIndicator?.size}
           />
         </View>
       ) : (
@@ -442,10 +446,10 @@ export const Chat = ({
                 contentOffsetKeyboardOpened={
                   composerHeight -
                   insets.bottom -
-                  theme.composer.contentOffsetKeyboardOpened
+                  (theme.composer?.contentOffsetKeyboardOpened || 0)
                 }
                 spaceBetweenKeyboardAndAccessoryView={
-                  -theme.composer.tabBarHeight
+                  -(theme.composer?.tabBarHeight || 0)
                 }>
                 <Input
                   {...{

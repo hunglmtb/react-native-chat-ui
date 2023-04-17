@@ -36,7 +36,8 @@ export const formatBytes = (size: number, fractionDigits = 2) => {
 export const getTextSizeInBytes = (text: string) => new Blob([text]).size;
 
 /** Returns user avatar and name color based on the ID */
-export const getUserAvatarNameColor = (user: User, colors: ColorValue[]) => {
+export const getUserAvatarNameColor = (user: User, colors?: ColorValue[]) => {
+  colors = colors || ['#000000'];
   return user.avatarColor || colors[hashCode(user.id) % colors.length];
 };
 

@@ -43,7 +43,7 @@ export const SendButton = ({
       {theme.icons?.sendButtonIcon?.() ?? (
         <Image
           source={require('../../assets/icon-send.png')}
-          style={theme.composer.sendIcon}
+          style={theme.composer?.sendIcon}
         />
       )}
     </TouchableOpacity>

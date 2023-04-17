@@ -23,7 +23,7 @@ export const StatusIcon = React.memo(
         statusIcon = theme.icons?.deliveredIcon?.() ?? (
           <Image
             source={require('../../assets/icon-delivered.png')}
-            style={theme.statusIcon.image}
+            style={theme.statusIcon?.image}
             testID="DeliveredIcon"
           />
         );
@@ -32,7 +32,7 @@ export const StatusIcon = React.memo(
         statusIcon = theme.icons?.errorIcon?.() ?? (
           <Image
             source={require('../../assets/icon-error.png')}
-            style={theme.statusIcon.imageError}
+            style={theme.statusIcon?.imageError}
             testID="ErrorIcon"
           />
         );
@@ -41,7 +41,7 @@ export const StatusIcon = React.memo(
         statusIcon = theme.icons?.seenIcon?.() ?? (
           <Image
             source={require('../../assets/icon-seen.png')}
-            style={theme.statusIcon.image}
+            style={theme.statusIcon?.image}
             testID="SeenIcon"
           />
         );
@@ -49,8 +49,8 @@ export const StatusIcon = React.memo(
       case 'sending':
         statusIcon = theme.icons?.sendingIcon?.() ?? (
           <CircularActivityIndicator
-            color={theme.statusIcon.activityIndicator.color}
-            size={theme.statusIcon.activityIndicator.size}
+            color={theme.statusIcon?.activityIndicator?.color}
+            size={theme.statusIcon?.activityIndicator?.size}
           />
         );
         break;

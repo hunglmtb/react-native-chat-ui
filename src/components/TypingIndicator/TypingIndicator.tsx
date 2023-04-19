@@ -1,18 +1,20 @@
 import * as React from 'react';
 
 import { Animated, Text, View } from 'react-native';
+import { Theme, UsernameLocation } from '../../types';
 
-import { Theme } from '../../types';
 import { TypingAnimation } from 'react-native-typing-animation';
 import styles from './styles';
 
 export const TypingIndicator = React.memo(
   ({
     isTyping,
+    showName,
     theme,
     typingNames,
   }: {
     isTyping: boolean;
+    showName: UsernameLocation;
     theme: Theme;
     typingNames?: string;
   }) => {
@@ -69,7 +71,9 @@ export const TypingIndicator = React.memo(
             height: heightScale.current,
           },
         ]}>
-        {typingNames && <Text style={namesText}>{typingNames}</Text>}
+        {showName !== 'none' && typingNames && (
+          <Text style={namesText}>{typingNames}</Text>
+        )}
         <View style={bubbleContainer}>
           <TypingAnimation
             dotRadius={4}

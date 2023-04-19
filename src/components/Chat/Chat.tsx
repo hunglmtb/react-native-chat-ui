@@ -381,11 +381,12 @@ export const Chat = ({
         <TypingIndicator
           isTyping={isTyping || false}
           typingNames={typingNames}
+          showName={showUserNames}
           theme={theme}
         />
       </View>
     ),
-    [headerIsTyping, isTyping, theme, typingNames],
+    [headerIsTyping, isTyping, showUserNames, theme, typingNames],
   );
 
   const renderScrollable = React.useCallback(

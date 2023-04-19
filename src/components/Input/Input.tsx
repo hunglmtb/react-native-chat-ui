@@ -103,7 +103,7 @@ export const Input = ({
       <TextInput
         multiline
         placeholder={l10n.inputPlaceholder}
-        placeholderTextColor={theme.composer?.inputStyle?.color}
+        placeholderTextColor={theme.composer?.placeholderTextColor}
         underlineColorAndroid="transparent"
         // Keep our implementation but allow user to use these `TextInputProps`
         style={input}

@@ -39,7 +39,11 @@ export const SendButton = ({
       {...touchableOpacityProps}
       onPress={handlePress}
       disabled={disabled}
-      style={[styles.sendButton, disabled ? styles.disabled : {}]}>
+      style={[
+        styles.sendButton,
+        theme.composer?.sendButton,
+        disabled ? styles.disabled : {},
+      ]}>
       {theme.icons?.sendButtonIcon?.() ?? (
         <Image
           source={require('../../assets/icon-send.png')}

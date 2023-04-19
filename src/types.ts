@@ -215,6 +215,8 @@ export interface ThemeComposer {
   container?: ViewStyle;
   contentOffsetKeyboardOpened?: number;
   inputStyle?: TextStyle;
+  placeholderTextColor?: ColorValue;
+  sendButton?: ViewStyle;
   sendIcon?: ImageStyle;
   tabBarHeight?: number;
 }

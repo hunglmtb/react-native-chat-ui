@@ -183,6 +183,7 @@ export const defaultTheme: Theme = {
       borderRadius: 20,
       backgroundColor: SECONDARY_DARK,
     },
+    placeholderTextColor: NEUTRAL_2,
     sendIcon: {
       tintColor: PRIMARY,
     },

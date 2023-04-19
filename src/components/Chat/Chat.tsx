@@ -439,20 +439,13 @@ export const Chat = ({
                 renderScrollable={renderScrollable}
                 contentContainerStyle={{ marginBottom: 0 }}
                 contentOffsetKeyboardClosed={
-                  initialComposerHeight -
-                  (theme.composer?.contentOffsetKeyboardClosed || 0)
+                  theme.composer?.contentOffsetKeyboardClosed || 0
                 }
                 contentOffsetKeyboardOpened={
                   initialComposerHeight -
                   insets.bottom -
                   (theme.composer?.contentOffsetKeyboardOpened || 0)
                 }
-                // contentOffsetKeyboardClosed={initialComposerHeight}
-                // contentOffsetKeyboardOpened={
-                //   composerHeight -
-                //   insets.bottom -
-                //   (theme.composer?.contentOffsetKeyboardOpened || 0)
-                // }
                 spaceBetweenKeyboardAndAccessoryView={
                   -(theme.composer?.tabBarHeight || 0)
                 }>

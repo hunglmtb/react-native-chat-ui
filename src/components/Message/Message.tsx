@@ -107,6 +107,7 @@ export const Message = React.memo(
         message,
         messageWidth,
         roundBorder,
+        showName,
         theme,
       });
 

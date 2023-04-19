@@ -1,4 +1,4 @@
-import { MessageType, Theme } from '../../types';
+import { MessageType, Theme, UsernameLocation } from '../../types';
 
 import { StyleSheet } from 'react-native';
 
@@ -7,12 +7,14 @@ const styles = ({
   message,
   messageWidth,
   roundBorder,
+  showName,
   theme,
 }: {
   currentUserIsAuthor: boolean;
   message: MessageType.DerivedAny;
   messageWidth: number;
   roundBorder: boolean;
+  showName: UsernameLocation;
   theme: Theme;
 }) => {
   const restContainer = currentUserIsAuthor
@@ -65,7 +67,7 @@ const styles = ({
       maxWidth: messageWidth,
     },
     username: {
-      marginLeft: 8,
+      marginLeft: showName === 'outside' ? 8 : 0,
       paddingBottom: 5,
       ...theme.bubble?.username,
     },

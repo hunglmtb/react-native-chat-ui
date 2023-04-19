@@ -61,6 +61,7 @@ export const TextMessage = ({
     username,
   } = styles({
     message,
+    showName,
     theme,
     user,
   });

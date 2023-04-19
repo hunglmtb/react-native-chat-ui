@@ -1,4 +1,4 @@
-import { MessageType, Theme, User } from '../../types';
+import { MessageType, Theme, User, UsernameLocation } from '../../types';
 
 import { StyleSheet } from 'react-native';
 import { getUserAvatarNameColor } from '../../utils';
@@ -6,10 +6,12 @@ import { getUserAvatarNameColor } from '../../utils';
 const styles = ({
   message,
   theme,
+  showName,
   user,
 }: {
   message: MessageType.Text;
   theme: Theme;
+  showName: UsernameLocation;
   user?: User;
 }) =>
   StyleSheet.create({
@@ -38,7 +40,7 @@ const styles = ({
         : theme.bubble?.textLeftContainer),
     },
     username: {
-      marginLeft: 8,
+      marginLeft: showName === 'outside' ? 8 : 0,
       paddingBottom: 5,
       color: getUserAvatarNameColor(message.author, theme.avatar?.colors),
       ...theme.bubble?.username,

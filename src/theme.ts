@@ -175,6 +175,7 @@ export const defaultTheme: Theme = {
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
     },
+    contentOffsetKeyboardClosed: 0,
     contentOffsetKeyboardOpened: 0,
     inputStyle: {
       color: NEUTRAL_7,

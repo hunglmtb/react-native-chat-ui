@@ -193,6 +193,22 @@ export interface ThemeColors {
   secondary?: ColorValue;
 }
 
+export interface ThemeComposer {
+  activityIndicator?: {
+    color?: ColorValue;
+    size?: number;
+  };
+  attachmentIcon?: ImageStyle;
+  container?: ViewStyle;
+  contentOffsetKeyboardClosed?: number;
+  contentOffsetKeyboardOpened?: number;
+  inputStyle?: TextStyle;
+  placeholderTextColor?: ColorValue;
+  sendButton?: ViewStyle;
+  sendIcon?: ImageStyle;
+  tabBarHeight?: number;
+}
+
 export interface ThemeDate {
   text?: TextStyle;
 }
@@ -205,21 +221,6 @@ export interface ThemeIcons {
   seenIcon?: () => React.ReactNode;
   sendButtonIcon?: () => React.ReactNode;
   sendingIcon?: () => React.ReactNode;
-}
-
-export interface ThemeComposer {
-  activityIndicator?: {
-    color?: ColorValue;
-    size?: number;
-  };
-  attachmentIcon?: ImageStyle;
-  container?: ViewStyle;
-  contentOffsetKeyboardOpened?: number;
-  inputStyle?: TextStyle;
-  placeholderTextColor?: ColorValue;
-  sendButton?: ViewStyle;
-  sendIcon?: ImageStyle;
-  tabBarHeight?: number;
 }
 
 export interface ThemeList {

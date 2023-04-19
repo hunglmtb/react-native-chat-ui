@@ -165,7 +165,6 @@ export const Chat = ({
   const [isNextPageLoading, setNextPageLoading] = React.useState(false);
   const [imageViewIndex, setImageViewIndex] = React.useState(0);
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({});
-  const [composerHeight, setComposerHeight] = React.useState(0);
   const [initialComposerHeight, setInitialComposerHeight] = React.useState(0);
   const insets = useSafeAreaInsets();
 
@@ -439,12 +438,21 @@ export const Chat = ({
               <KeyboardAccessoryView
                 renderScrollable={renderScrollable}
                 contentContainerStyle={{ marginBottom: 0 }}
-                contentOffsetKeyboardClosed={initialComposerHeight}
+                contentOffsetKeyboardClosed={
+                  initialComposerHeight -
+                  (theme.composer?.contentOffsetKeyboardClosed || 0)
+                }
                 contentOffsetKeyboardOpened={
-                  composerHeight -
+                  initialComposerHeight -
                   insets.bottom -
                   (theme.composer?.contentOffsetKeyboardOpened || 0)
                 }
+                // contentOffsetKeyboardClosed={initialComposerHeight}
+                // contentOffsetKeyboardOpened={
+                //   composerHeight -
+                //   insets.bottom -
+                //   (theme.composer?.contentOffsetKeyboardOpened || 0)
+                // }
                 spaceBetweenKeyboardAndAccessoryView={
                   -(theme.composer?.tabBarHeight || 0)
                 }>
@@ -464,7 +472,6 @@ export const Chat = ({
                           event.nativeEvent.layout.height,
                         );
                       }
-                      setComposerHeight(event.nativeEvent.layout.height);
                     },
                   }}
                 />

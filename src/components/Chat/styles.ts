@@ -19,7 +19,6 @@ export default ({ theme }: { theme: Theme }) =>
     },
     flatList: {
       flex: 1,
-      ...theme.list?.container,
     },
     flatListContentContainer: {
       flexGrow: 1,
@@ -35,8 +34,7 @@ export default ({ theme }: { theme: Theme }) =>
       height: 32,
     },
     headerIsTyping: {
-      marginBottom: theme.bubble?.containerLeft?.marginLeft,
-      marginLeft: theme.bubble?.containerLeft?.marginLeft,
+      paddingBottom: 15,
       justifyContent: 'center',
     },
   });

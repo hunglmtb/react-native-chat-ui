@@ -22,7 +22,7 @@ export const TypingIndicator = React.memo(
 
     const yCoords = React.useRef(new Animated.Value(isTyping ? 0 : 500));
     const heightScale = React.useRef(
-      new Animated.Value(isTyping ? (typingNames ? 60 : 35) : 0),
+      new Animated.Value(isTyping ? (showName !== 'none' ? 55 : 35) : 0),
     );
 
     React.useEffect(() => {
@@ -41,7 +41,7 @@ export const TypingIndicator = React.memo(
           useNativeDriver: false,
         }),
         Animated.timing(heightScale.current, {
-          toValue: typingNames ? 60 : 35,
+          toValue: showName !== 'none' ? 55 : 35,
           duration: 250,
           useNativeDriver: false,
         }),

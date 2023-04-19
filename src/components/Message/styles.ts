@@ -66,6 +66,7 @@ const styles = ({
     },
     username: {
       marginLeft: 8,
+      paddingBottom: 5,
       ...theme.bubble?.username,
     },
   });

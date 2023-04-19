@@ -16,8 +16,9 @@ const styles = ({ theme }: { theme: Theme }) =>
     },
     container: {},
     namesText: {
-      ...theme.bubble?.headerText,
       marginLeft: 8,
+      paddingBottom: 5,
+      ...theme.bubble?.username,
     },
   });
 

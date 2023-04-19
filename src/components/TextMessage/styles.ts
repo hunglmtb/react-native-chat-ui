@@ -38,6 +38,8 @@ const styles = ({
         : theme.bubble?.textLeftContainer),
     },
     username: {
+      marginLeft: 8,
+      paddingBottom: 5,
       color: getUserAvatarNameColor(message.author, theme.avatar?.colors),
       ...theme.bubble?.username,
     },

@@ -22,7 +22,7 @@ export const TypingIndicator = React.memo(
 
     const yCoords = React.useRef(new Animated.Value(isTyping ? 0 : 500));
     const heightScale = React.useRef(
-      new Animated.Value(isTyping ? 0 : showName !== 'none' ? 55 : 35),
+      new Animated.Value(isTyping ? (showName !== 'none' ? 55 : 35) : 0),
     );
 
     React.useEffect(() => {

@@ -112,7 +112,10 @@ export const Input = ({
       />
       {sendButtonVisibilityMode === 'always' ||
       (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
-        <SendButton disabled={disableSend} onPress={handleSend} />
+        <SendButton
+          disabled={disableSend || value.length === 0}
+          onPress={handleSend}
+        />
       ) : null}
     </View>
   );

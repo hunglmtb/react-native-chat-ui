@@ -65,11 +65,8 @@ const styles = ({
       maxWidth: messageWidth,
     },
     username: {
-      // See Message Avatar style. margin + width + marginRight + some additional padding
-      marginLeft:
-        typeof theme.bubble?.containerLeft === 'number'
-          ? theme.bubble.containerLeft + 32 + 8 + 20
-          : 32 + 8 + 20,
+      marginLeft: 8,
+      ...theme.bubble?.username,
     },
   });
 };

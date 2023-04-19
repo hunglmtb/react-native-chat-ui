@@ -158,6 +158,7 @@ export const defaultTheme: Theme = {
       marginHorizontal: 20,
       marginVertical: 16,
     },
+    username: {},
   },
   composer: {
     activityIndicator: {

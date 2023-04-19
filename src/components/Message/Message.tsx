@@ -6,6 +6,7 @@ import {
   ThemeContext,
   UserContext,
   excludeDerivedMessageProps,
+  getUserAvatarNameColor,
   getUserName,
 } from '../../utils';
 
@@ -200,8 +201,12 @@ export const Message = React.memo(
     };
 
     const renderUsername = () => {
+      const color = getUserAvatarNameColor(
+        message.author,
+        theme.avatar?.colors,
+      );
       return (
-        <Text numberOfLines={1} style={theme.bubble?.headerText}>
+        <Text numberOfLines={1} style={[{ color }, username]}>
           {getUserName(message.author)}
         </Text>
       );
@@ -230,9 +235,7 @@ export const Message = React.memo(
             {renderBubbleContainer()}
           </Pressable>
         </View>
-        <View style={username}>
-          {showName === 'outside' ? renderUsername() : null}
-        </View>
+        {showName === 'outside' ? renderUsername() : null}
       </>
     );
   },

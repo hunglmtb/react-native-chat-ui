@@ -52,12 +52,18 @@ export const TextMessage = ({
       ? message.previewData
       : undefined,
   );
-  const { descriptionText, headerText, titleText, text, textContainer } =
-    styles({
-      message,
-      theme,
-      user,
-    });
+  const {
+    descriptionText,
+    headerText,
+    titleText,
+    text,
+    textContainer,
+    username,
+  } = styles({
+    message,
+    theme,
+    user,
+  });
 
   const handleEmailPress = (email: string) => {
     Linking.openURL(`mailto:${email}`);
@@ -95,10 +101,10 @@ export const TextMessage = ({
     );
   };
 
-  const renderUsername = (username: string) => {
+  const renderUsername = (name: string) => {
     return (
-      <Text numberOfLines={1} style={headerText}>
-        {username}
+      <Text numberOfLines={1} style={username}>
+        {name}
       </Text>
     );
   };

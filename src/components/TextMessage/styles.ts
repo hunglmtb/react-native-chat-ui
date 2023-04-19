@@ -19,8 +19,8 @@ const styles = ({
         : theme.bubble?.linkDescriptionTextLeft),
     },
     headerText: {
-      ...theme.bubble?.headerText,
       color: getUserAvatarNameColor(message.author, theme.avatar?.colors),
+      ...theme.bubble?.headerText,
     },
     titleText: {
       ...(user?.id === message.author.id
@@ -36,6 +36,10 @@ const styles = ({
       ...(user?.id === message.author.id
         ? theme.bubble?.textRightContainer
         : theme.bubble?.textLeftContainer),
+    },
+    username: {
+      color: getUserAvatarNameColor(message.author, theme.avatar?.colors),
+      ...theme.bubble?.username,
     },
   });
 

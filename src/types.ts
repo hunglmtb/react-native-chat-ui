@@ -184,6 +184,7 @@ export interface ThemeBubble {
   messageTextRight?: TextStyle;
   textLeftContainer?: TextStyle;
   textRightContainer?: TextStyle;
+  username?: TextStyle;
 }
 
 export interface ThemeColors {

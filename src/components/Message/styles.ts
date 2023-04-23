@@ -67,7 +67,7 @@ const styles = ({
       maxWidth: messageWidth,
     },
     username: {
-      marginLeft: showName === 'outside' ? 8 : 0,
+      marginLeft: showName === 'outside' ? 50 : 0,
       paddingBottom: 5,
       ...theme.bubble?.username,
     },

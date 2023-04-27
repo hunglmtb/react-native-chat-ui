@@ -5,7 +5,7 @@ import {
   AttachmentButtonAdditionalProps,
 } from '../AttachmentButton';
 import { L10nContext, ThemeContext, UserContext, unwrap } from '../../utils';
-import { LayoutChangeEvent, TextInput, View } from 'react-native';
+import { LayoutChangeEvent, Platform, TextInput, View } from 'react-native';
 
 import { CircularActivityIndicator } from '../CircularActivityIndicator';
 import { MessageType } from '../../types';
@@ -77,6 +77,12 @@ export const Input = ({
     if (trimmedValue) {
       onSendPress({ text: trimmedValue, type: 'text' });
       setText('');
+
+      // Android is not calling TextInput.onChangeText() on this setText call.
+      // Call it manually.
+      if (Platform.OS === 'android') {
+        onInputTextChanged && onInputTextChanged('');
+      }
     }
   };
 

@@ -52,7 +52,8 @@ export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps;
 export interface ChatProps extends ChatTopLevelProps {
   /** Allows you to replace the default Input widget e.g. if you want to create a channel view. */
   customBottomComponent?: () => React.ReactNode;
-  /** If {@link ChatProps.dateFormat} and/or {@link ChatProps.timeFormat} is not enough to
+  /** If {@link ChatProps.dateFormat}, {@link ChatProps.timeFormat} or
+   * {@link ChatProps.relativeDateTime} is not enough to
    * customize date headers in your case, use this to return an arbitrary
    * string based on a `dateTime` of a particular message. Can be helpful to
    * return "Today" if `dateTime` is today. IMPORTANT: this will replace
@@ -92,6 +93,11 @@ export interface ChatProps extends ChatTopLevelProps {
    * to the very end of the list (minus `onEndReachedThreshold`).
    * See {@link ChatProps.flatListProps} to set it up. */
   onEndReached?: () => Promise<void>;
+  /** Use date and time relative format (e.g.  'Today..', 'Yesterday..').
+   * Using relative date time overrides dateFormat and timeFormat.
+   * @see {@link ChatProps.dateFormat}
+   * @see {@link ChatProps.timeFormat} */
+  relativeDateTime?: boolean;
   /** Show user names for received messages. Useful for a group chat. Will be
    * shown only on text messages. */
   showUserNames?: UsernameLocation;
@@ -133,6 +139,7 @@ export const Chat = ({
   onMessagePress,
   onPreviewDataFetched,
   onSendPress,
+  relativeDateTime,
   renderBubble,
   renderCustomMessage,
   renderFileMessage,
@@ -176,6 +183,7 @@ export const Chat = ({
   const { chatMessages, gallery } = calculateChatMessages(messages, user, {
     customDateHeaderText,
     dateFormat,
+    relativeDateTime,
     showUserNames,
     timeFormat,
   });

@@ -92,32 +92,46 @@ const getVerboseDateTimeRepresentation = (
   dateTime: number,
   {
     dateFormat,
+    relativeDateTime,
     timeFormat,
   }: {
     dateFormat?: string;
+    relativeDateTime?: boolean;
     timeFormat?: string;
   },
 ) => {
-  const formattedDate = dateFormat
-    ? dayjs(dateTime).format(dateFormat)
-    : dayjs(dateTime).format('MMM D');
+  if (relativeDateTime) {
+    const formattedDateTime = dayjs(dateTime).calendar(null, {
+      sameDay: '[Today] h:mm A',
+      nextDay: '[Tomorrow] h:mm A',
+      nextWeek: '[Next] dddd h:mm A',
+      lastDay: '[Yesterday] h:mm A',
+      lastWeek: 'dddd h:mm A',
+      sameElse: 'ddd, MMM D [at] h:mm A',
+    });
+    return formattedDateTime;
+  } else {
+    const formattedDate = dateFormat
+      ? dayjs(dateTime).format(dateFormat)
+      : dayjs(dateTime).format('MMM D');
 
-  const formattedTime = timeFormat
-    ? dayjs(dateTime).format(timeFormat)
-    : dayjs(dateTime).format('HH:mm');
+    const formattedTime = timeFormat
+      ? dayjs(dateTime).format(timeFormat)
+      : dayjs(dateTime).format('HH:mm');
 
-  const localDateTime = dayjs(dateTime);
-  const now = dayjs();
+    const localDateTime = dayjs(dateTime);
+    const now = dayjs();
 
-  if (
-    localDateTime.isSame(now, 'day') &&
-    localDateTime.isSame(now, 'month') &&
-    localDateTime.isSame(now, 'year')
-  ) {
-    return formattedTime;
+    if (
+      localDateTime.isSame(now, 'day') &&
+      localDateTime.isSame(now, 'month') &&
+      localDateTime.isSame(now, 'year')
+    ) {
+      return formattedTime;
+    }
+
+    return `${formattedDate}, ${formattedTime}`;
   }
-
-  return `${formattedDate}, ${formattedTime}`;
 };
 
 /** Parses provided messages to chat messages (with headers) and returns them with a gallery */
@@ -127,11 +141,13 @@ export const calculateChatMessages = (
   {
     customDateHeaderText,
     dateFormat,
+    relativeDateTime,
     showUserNames,
     timeFormat,
   }: {
     customDateHeaderText?: (dateTime: number) => string;
     dateFormat?: string;
+    relativeDateTime?: boolean;
     showUserNames: UsernameLocation;
     timeFormat?: string;
   },
@@ -200,6 +216,7 @@ export const calculateChatMessages = (
         customDateHeaderText?.(message.createdAt!) ??
         getVerboseDateTimeRepresentation(message.createdAt!, {
           dateFormat,
+          relativeDateTime,
           timeFormat,
         });
       chatMessages = [{ id: text, text, type: 'dateHeader' }, ...chatMessages];
@@ -228,6 +245,7 @@ export const calculateChatMessages = (
         customDateHeaderText?.(nextMessage!.createdAt!) ??
         getVerboseDateTimeRepresentation(nextMessage!.createdAt!, {
           dateFormat,
+          relativeDateTime,
           timeFormat,
         });
 

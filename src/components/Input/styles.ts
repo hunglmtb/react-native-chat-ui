@@ -4,7 +4,7 @@ import { Theme } from '../../types';
 export default ({ theme }: { theme: Theme }) =>
   StyleSheet.create({
     container: {
-      alignItems: 'center',
+      alignItems: 'flex-end',
       flexDirection: 'row',
       paddingHorizontal: 24,
       paddingVertical: 20,

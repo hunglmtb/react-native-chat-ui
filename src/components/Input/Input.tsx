@@ -1,16 +1,27 @@
 import * as React from 'react';
 
+import { Attachment, MessageType } from '../../types';
 import {
   AttachmentButton,
   AttachmentButtonAdditionalProps,
 } from '../AttachmentButton';
+import {
+  FlatList,
+  Image,
+  LayoutChangeEvent,
+  ListRenderItem,
+  Platform,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { L10nContext, ThemeContext, UserContext, unwrap } from '../../utils';
-import { LayoutChangeEvent, Platform, TextInput, View } from 'react-native';
 
 import { CircularActivityIndicator } from '../CircularActivityIndicator';
-import { MessageType } from '../../types';
 import { SendButton } from '../SendButton';
 import styles from './styles';
+import { useState } from 'react';
 
 export interface InputTopLevelProps {
   /** Disables the send button. */
@@ -21,14 +32,14 @@ export interface InputTopLevelProps {
    * something is uploading so you need to set this manually. */
   isAttachmentUploading?: boolean;
   /** @see {@link AttachmentButtonProps.onPress} */
-  onAttachmentPress?: () => void;
+  onAttachmentPress?: () => Promise<Attachment[]>;
   /** Called when the input text is changed. */
   onInputTextChanged?: (text: string) => void;
   /** Returns the layout for the composer. */
   onLayout?: (event: LayoutChangeEvent) => void;
   /** Will be called on {@link SendButton} tap. Has {@link MessageType.PartialText} which can
    * be transformed to {@link MessageType.Text} and added to the messages list. */
-  onSendPress: (message: MessageType.PartialText) => void;
+  onSendPress: (message: MessageType.PartialAny[]) => void;
   /** Controls the visibility behavior of the {@link SendButton} based on the
    * `TextInput` state. Defaults to `editing`. */
   sendButtonVisibilityMode?: 'always' | 'editing';
@@ -59,6 +70,7 @@ export const Input = ({
 
   // Use `defaultValue` if provided
   const [text, setText] = React.useState('');
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
 
   const value = text;
 
@@ -68,14 +80,30 @@ export const Input = ({
     onInputTextChanged && onInputTextChanged(newText);
   };
 
+  const handleAttachmentPress = async () => {
+    if (!onAttachmentPress) return;
+    const newAttachments = await onAttachmentPress();
+    if (newAttachments.length > 0) {
+      setAttachments(
+        ([] as Attachment[]).concat(attachments).concat(newAttachments),
+      );
+    }
+  };
+
   const handleSend = () => {
-    const trimmedValue = value.trim();
+    let message: MessageType.PartialAny[] = [];
+
+    if (attachments.length > 0) {
+      message = message.concat(attachments);
+      setAttachments([]);
+    }
 
     // Impossible to test since button is not visible when value is empty.
     // Additional check for the keyboard input.
     /* istanbul ignore next */
+    const trimmedValue = value.trim();
     if (trimmedValue) {
-      onSendPress({ text: trimmedValue, type: 'text' });
+      message = message.concat({ text: trimmedValue, type: 'text' });
       setText('');
 
       // Android is not calling TextInput.onChangeText() on this setText call.
@@ -84,6 +112,96 @@ export const Input = ({
         onInputTextChanged && onInputTextChanged('');
       }
     }
+
+    onSendPress(message);
+  };
+
+  const renderAttachedFile = (file: MessageType.PartialFile, index: number) => {
+    return (
+      <View>
+        <View
+          style={{
+            height: 150,
+            aspectRatio: 1,
+            marginRight: 3,
+            borderRadius: 10,
+          }}>
+          <Text>{file.name}</Text>
+        </View>
+        <TouchableOpacity
+          style={{ position: 'absolute', top: 5, right: 8 }}
+          onPress={() => {
+            const updated = ([] as Attachment[]).concat(attachments);
+            updated.splice(index, 1);
+            setAttachments(updated);
+          }}>
+          <Image
+            source={require('../../assets/icon-x.png')}
+            style={{
+              width: 25,
+              height: 25,
+              tintColor: 'white',
+              backgroundColor: 'gray',
+              borderRadius: 30,
+              borderWidth: 2,
+              borderColor: 'white',
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const renderAttachedImage = (
+    image: MessageType.PartialImage,
+    index: number,
+  ) => {
+    return (
+      <View>
+        <Image
+          source={{ uri: image.uri }}
+          style={{
+            height: 150,
+            aspectRatio:
+              image.width && image.height ? image.width / image.height : 1,
+            marginRight: 3,
+            borderRadius: 10,
+          }}
+        />
+        <TouchableOpacity
+          style={{ position: 'absolute', top: 5, right: 8 }}
+          onPress={() => {
+            const updated = ([] as Attachment[]).concat(attachments);
+            updated.splice(index, 1);
+            setAttachments(updated);
+          }}>
+          <Image
+            source={require('../../assets/icon-x.png')}
+            style={{
+              width: 25,
+              height: 25,
+              tintColor: 'white',
+              backgroundColor: 'gray',
+              borderRadius: 30,
+              borderWidth: 2,
+              borderColor: 'white',
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const renderAttachment: ListRenderItem<Attachment> = ({
+    item: attachment,
+    index,
+  }) => {
+    if (attachment.type === 'file') {
+      return renderAttachedFile(attachment, index);
+    } else if (attachment.type === 'image') {
+      return renderAttachedImage(attachment, index);
+    }
+    return null;
   };
 
   return (
@@ -102,24 +220,49 @@ export const Input = ({
           !!onAttachmentPress && (
             <AttachmentButton
               {...unwrap(attachmentButtonProps)}
-              onPress={onAttachmentPress}
+              onPress={handleAttachmentPress}
             />
           )
         ))}
-      <TextInput
-        multiline
-        placeholder={l10n.inputPlaceholder}
-        placeholderTextColor={theme.composer?.placeholderTextColor}
-        underlineColorAndroid="transparent"
-        // Keep our implementation but allow user to use these `TextInputProps`
-        style={input}
-        onChangeText={handleChangeText}
-        value={value}
-      />
+
+      {/** AJP add view wrapper */}
+      <View
+        style={{
+          flex: 1,
+          /*height: 35,*/ borderWidth: 1,
+          borderRadius: 12,
+          overflow: 'hidden',
+        }}>
+        {/** AJP add scroll view */}
+        {attachments.length > 0 && (
+          <FlatList
+            data={attachments}
+            renderItem={renderAttachment}
+            keyExtractor={item => `${item.uri}`}
+            horizontal
+            contentContainerStyle={{ padding: 3 }}
+            style={{ height: 156, flex: 1 }}
+            showsHorizontalScrollIndicator={false}
+          />
+        )}
+        <TextInput
+          multiline
+          placeholder={l10n.inputPlaceholder}
+          placeholderTextColor={theme.composer?.placeholderTextColor}
+          underlineColorAndroid="transparent"
+          // Keep our implementation but allow user to use these `TextInputProps`
+          style={input}
+          onChangeText={handleChangeText}
+          value={value}
+        />
+      </View>
+
       {sendButtonVisibilityMode === 'always' ||
       (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
         <SendButton
-          disabled={disableSend || value.length === 0}
+          disabled={
+            disableSend || (value.length === 0 && attachments.length === 0)
+          }
           onPress={handleSend}
         />
       ) : null}

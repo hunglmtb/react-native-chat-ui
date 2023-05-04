@@ -96,6 +96,7 @@ export namespace MessageType {
     height?: number;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     metadata?: Record<string, any>;
+    mimeType: string;
     name: string;
     size: number;
     type: 'image';
@@ -129,6 +130,8 @@ export namespace MessageType {
     type: 'dateHeader';
   }
 }
+
+export type Attachment = MessageType.PartialFile | MessageType.PartialImage;
 
 export interface PreviewImage {
   id: string;

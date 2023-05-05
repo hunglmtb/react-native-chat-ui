@@ -1,7 +1,5 @@
 import { Theme } from './types';
 
-// For internal usage only. Use values from theme itself.
-
 /** Error */
 const ERROR = '#ff6767';
 
@@ -156,6 +154,7 @@ export const defaultTheme: Theme = {
   },
   colors: {
     error: ERROR,
+    light: NEUTRAL_2,
     primary: PRIMARY,
     secondary: SECONDARY,
   },
@@ -168,14 +167,14 @@ export const defaultTheme: Theme = {
       tintColor: PRIMARY,
     },
     container: {
-      position: 'absolute',
-      bottom: 0,
       backgroundColor: SECONDARY_DARK,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
     },
     contentOffsetKeyboardClosed: 0,
     contentOffsetKeyboardOpened: 0,
+    inputAttachmentDivider: {},
+    inputContainer: {},
     inputStyle: {
       color: NEUTRAL_7,
       fontSize: 16,

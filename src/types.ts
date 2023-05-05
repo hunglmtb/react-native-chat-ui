@@ -192,6 +192,7 @@ export interface ThemeBubble {
 
 export interface ThemeColors {
   error?: ColorValue;
+  light?: ColorValue;
   primary?: ColorValue;
   secondary?: ColorValue;
 }
@@ -205,6 +206,8 @@ export interface ThemeComposer {
   container?: ViewStyle;
   contentOffsetKeyboardClosed?: number;
   contentOffsetKeyboardOpened?: number;
+  inputAttachmentDivider?: ViewStyle;
+  inputContainer?: ViewStyle;
   inputStyle?: TextStyle;
   placeholderTextColor?: ColorValue;
   removeAttachmentButton?: ImageStyle;

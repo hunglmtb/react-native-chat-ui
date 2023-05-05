@@ -70,6 +70,8 @@ export const Input = ({
     attachmentContainer,
     container,
     input,
+    inputAttachmentDivider,
+    inputContainer,
     marginRight,
     removeAttachmentButton,
     removeAttachmentButtonImage,
@@ -206,24 +208,15 @@ export const Input = ({
             />
           )
         ))}
-
-      {/** AJP add view wrapper */}
-      <View
-        style={{
-          flex: 1,
-          /*height: 35,*/ borderWidth: 1,
-          borderRadius: 12,
-          overflow: 'hidden',
-        }}>
-        {/** AJP add scroll view */}
+      <View style={inputContainer}>
         {attachments.length > 0 && (
           <FlatList
             data={attachments}
             renderItem={renderAttachment}
             keyExtractor={item => `${item.uri}`}
             horizontal
-            contentContainerStyle={{ padding: 3 }}
-            style={{ height: 156, flex: 1 }}
+            contentContainerStyle={{ padding: 5 }}
+            style={{ height: attachmentContainer.height + 10, flex: 1 }}
             showsHorizontalScrollIndicator={false}
           />
         )}
@@ -232,13 +225,11 @@ export const Input = ({
           placeholder={l10n.inputPlaceholder}
           placeholderTextColor={theme.composer?.placeholderTextColor}
           underlineColorAndroid="transparent"
-          // Keep our implementation but allow user to use these `TextInputProps`
-          style={input}
+          style={[input, attachments.length > 0 ? inputAttachmentDivider : {}]}
           onChangeText={handleChangeText}
           value={value}
         />
       </View>
-
       {sendButtonVisibilityMode === 'always' ||
       (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
         <SendButton

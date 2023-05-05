@@ -6,8 +6,8 @@ export default ({ theme }: { theme: Theme }) =>
     attachmentContainer: {
       height: 150,
       aspectRatio: 1,
-      marginRight: 3,
-      borderRadius: 10,
+      marginRight: 5,
+      borderRadius: 15,
     },
     container: {
       alignItems: 'flex-end',
@@ -16,7 +16,6 @@ export default ({ theme }: { theme: Theme }) =>
       paddingVertical: 20,
     },
     input: {
-      flex: 1,
       maxHeight: 100,
       minHeight: 25,
       paddingHorizontal: 10,
@@ -24,6 +23,15 @@ export default ({ theme }: { theme: Theme }) =>
       paddingBottom: 0,
       paddingTop: 0,
       ...theme.composer?.inputStyle,
+    },
+    inputAttachmentDivider: {
+      borderRadius: 0,
+      ...theme.composer?.inputAttachmentDivider,
+    },
+    inputContainer: {
+      flex: 1,
+      overflow: 'hidden',
+      ...theme.composer?.inputContainer,
     },
     marginRight: {
       marginRight: 24,

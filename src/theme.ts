@@ -28,12 +28,6 @@ const SECONDARY_DARK = '#2b2250';
 
 /** Default chat theme which implements {@link Theme} */
 export const defaultTheme: Theme = {
-  colors: {
-    error: ERROR,
-    primary: PRIMARY,
-    secondary: SECONDARY,
-  },
-
   avatar: {
     colors: [
       '#ff6767',
@@ -160,6 +154,11 @@ export const defaultTheme: Theme = {
     },
     username: {},
   },
+  colors: {
+    error: ERROR,
+    primary: PRIMARY,
+    secondary: SECONDARY,
+  },
   composer: {
     activityIndicator: {
       color: PRIMARY,
@@ -186,6 +185,11 @@ export const defaultTheme: Theme = {
       backgroundColor: SECONDARY_DARK,
     },
     placeholderTextColor: NEUTRAL_2,
+    removeAttachmentButton: {
+      backgroundColor: NEUTRAL_2,
+      borderColor: NEUTRAL_7,
+      tintColor: NEUTRAL_7,
+    },
     sendIcon: {
       tintColor: PRIMARY,
     },

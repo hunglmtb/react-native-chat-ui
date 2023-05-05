@@ -207,6 +207,7 @@ export interface ThemeComposer {
   contentOffsetKeyboardOpened?: number;
   inputStyle?: TextStyle;
   placeholderTextColor?: ColorValue;
+  removeAttachmentButton?: ImageStyle;
   sendButton?: ViewStyle;
   sendIcon?: ImageStyle;
   tabBarHeight?: number;

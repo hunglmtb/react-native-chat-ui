@@ -66,7 +66,16 @@ export const Input = ({
   const l10n = React.useContext(L10nContext);
   const theme = React.useContext(ThemeContext);
   const user = React.useContext(UserContext);
-  const { container, input, marginRight } = styles({ theme });
+  const {
+    attachmentContainer,
+    container,
+    input,
+    marginRight,
+    removeAttachmentButton,
+    removeAttachmentButtonImage,
+  } = styles({
+    theme,
+  });
 
   // Use `defaultValue` if provided
   const [text, setText] = React.useState('');
@@ -116,38 +125,30 @@ export const Input = ({
     onSendPress(message);
   };
 
+  const renderRemoveAttachmentButton = (index: number) => {
+    return (
+      <TouchableOpacity
+        style={removeAttachmentButton}
+        onPress={() => {
+          const updated = ([] as Attachment[]).concat(attachments);
+          updated.splice(index, 1);
+          setAttachments(updated);
+        }}>
+        <Image
+          source={require('../../assets/icon-x.png')}
+          style={removeAttachmentButtonImage}
+        />
+      </TouchableOpacity>
+    );
+  };
+
   const renderAttachedFile = (file: MessageType.PartialFile, index: number) => {
     return (
       <View>
-        <View
-          style={{
-            height: 150,
-            aspectRatio: 1,
-            marginRight: 3,
-            borderRadius: 10,
-          }}>
+        <View style={attachmentContainer}>
           <Text>{file.name}</Text>
         </View>
-        <TouchableOpacity
-          style={{ position: 'absolute', top: 5, right: 8 }}
-          onPress={() => {
-            const updated = ([] as Attachment[]).concat(attachments);
-            updated.splice(index, 1);
-            setAttachments(updated);
-          }}>
-          <Image
-            source={require('../../assets/icon-x.png')}
-            style={{
-              width: 25,
-              height: 25,
-              tintColor: 'white',
-              backgroundColor: 'gray',
-              borderRadius: 30,
-              borderWidth: 2,
-              borderColor: 'white',
-            }}
-          />
-        </TouchableOpacity>
+        {renderRemoveAttachmentButton(index)}
       </View>
     );
   };
@@ -160,34 +161,15 @@ export const Input = ({
       <View>
         <Image
           source={{ uri: image.uri }}
-          style={{
-            height: 150,
-            aspectRatio:
-              image.width && image.height ? image.width / image.height : 1,
-            marginRight: 3,
-            borderRadius: 10,
-          }}
+          style={[
+            attachmentContainer,
+            {
+              aspectRatio:
+                image.width && image.height ? image.width / image.height : 1,
+            },
+          ]}
         />
-        <TouchableOpacity
-          style={{ position: 'absolute', top: 5, right: 8 }}
-          onPress={() => {
-            const updated = ([] as Attachment[]).concat(attachments);
-            updated.splice(index, 1);
-            setAttachments(updated);
-          }}>
-          <Image
-            source={require('../../assets/icon-x.png')}
-            style={{
-              width: 25,
-              height: 25,
-              tintColor: 'white',
-              backgroundColor: 'gray',
-              borderRadius: 30,
-              borderWidth: 2,
-              borderColor: 'white',
-            }}
-          />
-        </TouchableOpacity>
+        {renderRemoveAttachmentButton(index)}
       </View>
     );
   };

@@ -68,7 +68,12 @@ export const Input = ({
   const user = React.useContext(UserContext);
   const {
     attachmentContainer,
+    attachmentIcon,
+    attachmentIconContainer,
     container,
+    fileAttachmentContainer,
+    fileAttachmentIconContainer,
+    fileAttachmentName,
     input,
     inputAttachmentDivider,
     inputContainer,
@@ -147,8 +152,16 @@ export const Input = ({
   const renderAttachedFile = (file: MessageType.PartialFile, index: number) => {
     return (
       <View>
-        <View style={attachmentContainer}>
-          <Text>{file.name}</Text>
+        <View style={[attachmentContainer, fileAttachmentContainer]}>
+          <View style={[attachmentIconContainer, fileAttachmentIconContainer]}>
+            {theme.icons?.documentIcon?.() ?? (
+              <Image
+                source={require('../../assets/icon-document.png')}
+                style={attachmentIcon}
+              />
+            )}
+          </View>
+          <Text style={fileAttachmentName}>{file.name}</Text>
         </View>
         {renderRemoveAttachmentButton(index)}
       </View>

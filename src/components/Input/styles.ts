@@ -9,11 +9,38 @@ export default ({ theme }: { theme: Theme }) =>
       marginRight: 5,
       borderRadius: 15,
     },
+    attachmentIcon: {
+      ...theme.composer?.attachmentPlaceholderIcon,
+    },
+    attachmentIconContainer: {
+      alignItems: 'center',
+      backgroundColor: theme.colors?.light,
+      borderRadius: 21,
+      height: 42,
+      justifyContent: 'center',
+      width: 42,
+      alignSelf: 'center',
+    },
     container: {
       alignItems: 'flex-end',
       flexDirection: 'row',
       paddingHorizontal: 24,
       paddingVertical: 20,
+    },
+    fileAttachmentContainer: {
+      borderWidth: 1,
+      justifyContent: 'center',
+      padding: 10,
+      aspectRatio: 0.8,
+      ...theme.composer?.fileAttachmentPlaceholderContainer,
+    },
+    fileAttachmentIconContainer: {
+      ...theme.composer?.fileAttachmentPlaceholderIconContainer,
+    },
+    fileAttachmentName: {
+      textAlign: 'center',
+      marginTop: 5,
+      ...theme.composer?.fileAttachmentPlaceholderText,
     },
     input: {
       maxHeight: 100,

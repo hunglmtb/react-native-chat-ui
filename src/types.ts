@@ -202,10 +202,13 @@ export interface ThemeComposer {
     color?: ColorValue;
     size?: number;
   };
-  attachmentIcon?: ImageStyle;
+  attachmentPlaceholderIcon?: ImageStyle;
   container?: ViewStyle;
   contentOffsetKeyboardClosed?: number;
   contentOffsetKeyboardOpened?: number;
+  fileAttachmentPlaceholderContainer?: ViewStyle;
+  fileAttachmentPlaceholderIconContainer?: ViewStyle;
+  fileAttachmentPlaceholderText?: TextStyle;
   inputAttachmentDivider?: ViewStyle;
   inputContainer?: ViewStyle;
   inputStyle?: TextStyle;

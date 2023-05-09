@@ -12,21 +12,23 @@ import { PreviewData } from '@flyerhq/react-native-link-preview';
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace MessageType {
-  export type Any = Custom | File | Image | Text | Unsupported;
+  export type Any = Custom | File | Image | Text | Unsupported | Video;
 
   export type DerivedMessage =
     | DerivedCustom
     | DerivedFile
     | DerivedImage
     | DerivedText
-    | DerivedUnsupported;
+    | DerivedUnsupported
+    | DerivedVideo;
   export type DerivedAny = DateHeader | DerivedMessage;
 
   export type PartialAny =
     | PartialCustom
     | PartialFile
     | PartialImage
-    | PartialText;
+    | PartialText
+    | PartialVideo;
 
   interface Base {
     author: User;
@@ -36,7 +38,7 @@ export namespace MessageType {
     metadata?: Record<string, any>;
     roomId?: string;
     status?: 'delivered' | 'error' | 'seen' | 'sending' | 'sent';
-    type: 'custom' | 'file' | 'image' | 'text' | 'unsupported';
+    type: 'custom' | 'file' | 'image' | 'text' | 'unsupported' | 'video';
     updatedAt?: number;
   }
 
@@ -62,6 +64,10 @@ export namespace MessageType {
 
   export interface DerivedText extends DerivedMessageProps, Text {
     type: Text['type'];
+  }
+
+  export interface DerivedVideo extends DerivedMessageProps, Video {
+    type: Video['type'];
   }
 
   export interface DerivedUnsupported extends DerivedMessageProps, Unsupported {
@@ -108,6 +114,24 @@ export namespace MessageType {
     type: 'image';
   }
 
+  export interface PartialVideo {
+    duration?: number;
+    height?: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    metadata?: Record<string, any>;
+    mimeType: string;
+    name: string;
+    size: number;
+    posterUri?: string;
+    type: 'video';
+    uri: string;
+    width?: number;
+  }
+
+  export interface Video extends Base, PartialVideo {
+    type: 'video';
+  }
+
   export interface PartialText {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     metadata?: Record<string, any>;
@@ -131,7 +155,10 @@ export namespace MessageType {
   }
 }
 
-export type Attachment = MessageType.PartialFile | MessageType.PartialImage;
+export type Attachment =
+  | MessageType.PartialFile
+  | MessageType.PartialImage
+  | MessageType.PartialVideo;
 
 export interface PreviewImage {
   id: string;
@@ -202,13 +229,14 @@ export interface ThemeComposer {
     color?: ColorValue;
     size?: number;
   };
-  attachmentPlaceholderIcon?: ImageStyle;
+  attachmentButtonIcon?: ImageStyle;
+  attachmentIcon?: ImageStyle;
   container?: ViewStyle;
   contentOffsetKeyboardClosed?: number;
   contentOffsetKeyboardOpened?: number;
-  fileAttachmentPlaceholderContainer?: ViewStyle;
-  fileAttachmentPlaceholderIconContainer?: ViewStyle;
-  fileAttachmentPlaceholderText?: TextStyle;
+  fileAttachmentContainer?: ViewStyle;
+  fileAttachmentIconContainer?: ViewStyle;
+  fileAttachmentText?: TextStyle;
   inputAttachmentDivider?: ViewStyle;
   inputContainer?: ViewStyle;
   inputStyle?: TextStyle;

@@ -9,8 +9,11 @@ export default ({ theme }: { theme: Theme }) =>
       marginRight: 5,
       borderRadius: 15,
     },
+    attachmentButtonIcon: {
+      ...theme.composer?.attachmentButtonIcon,
+    },
     attachmentIcon: {
-      ...theme.composer?.attachmentPlaceholderIcon,
+      ...theme.composer?.attachmentIcon,
     },
     attachmentIconContainer: {
       alignItems: 'center',
@@ -32,15 +35,15 @@ export default ({ theme }: { theme: Theme }) =>
       justifyContent: 'center',
       padding: 10,
       aspectRatio: 0.8,
-      ...theme.composer?.fileAttachmentPlaceholderContainer,
+      ...theme.composer?.fileAttachmentContainer,
     },
     fileAttachmentIconContainer: {
-      ...theme.composer?.fileAttachmentPlaceholderIconContainer,
+      ...theme.composer?.fileAttachmentIconContainer,
     },
     fileAttachmentName: {
       textAlign: 'center',
       marginTop: 5,
-      ...theme.composer?.fileAttachmentPlaceholderText,
+      ...theme.composer?.fileAttachmentText,
     },
     input: {
       maxHeight: 100,

@@ -20,6 +20,7 @@ import { L10nContext, ThemeContext, UserContext, unwrap } from '../../utils';
 
 import { CircularActivityIndicator } from '../CircularActivityIndicator';
 import { SendButton } from '../SendButton';
+import { Video } from '../Video';
 import styles from './styles';
 import { useState } from 'react';
 
@@ -189,6 +190,30 @@ export const Input = ({
     );
   };
 
+  const renderAttachedVideo = (
+    video: MessageType.PartialVideo,
+    index: number,
+  ) => {
+    return (
+      <View>
+        <Video
+          mimeType={video.mimeType}
+          uri={video.uri}
+          videoStyle={[
+            attachmentContainer,
+            {
+              aspectRatio:
+                video.width && video.height
+                  ? video.width / video.height
+                  : undefined,
+            },
+          ]}
+        />
+        {renderRemoveAttachmentButton(index)}
+      </View>
+    );
+  };
+
   const renderAttachment: ListRenderItem<Attachment> = ({
     item: attachment,
     index,
@@ -197,6 +222,8 @@ export const Input = ({
       return renderAttachedFile(attachment, index);
     } else if (attachment.type === 'image') {
       return renderAttachedImage(attachment, index);
+    } else if (attachment.type === 'video') {
+      return renderAttachedVideo(attachment, index);
     }
     return null;
   };

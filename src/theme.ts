@@ -163,7 +163,10 @@ export const defaultTheme: Theme = {
       color: PRIMARY,
       size: 16,
     },
-    attachmentPlaceholderIcon: {
+    attachmentButtonIcon: {
+      tintColor: PRIMARY,
+    },
+    attachmentIcon: {
       tintColor: PRIMARY,
     },
     container: {
@@ -173,14 +176,14 @@ export const defaultTheme: Theme = {
     },
     contentOffsetKeyboardClosed: 0,
     contentOffsetKeyboardOpened: 0,
-    fileAttachmentPlaceholderContainer: {
+    fileAttachmentContainer: {
       backgroundColor: NEUTRAL_7,
       borderColor: NEUTRAL_2,
     },
-    fileAttachmentPlaceholderIconContainer: {
+    fileAttachmentIconContainer: {
       backgroundColor: SECONDARY,
     },
-    fileAttachmentPlaceholderText: {},
+    fileAttachmentText: {},
     inputAttachmentDivider: {},
     inputContainer: {},
     inputStyle: {

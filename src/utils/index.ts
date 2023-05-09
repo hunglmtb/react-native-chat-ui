@@ -20,6 +20,9 @@ export const L10nContext = React.createContext<
 >(l10n.en);
 export const ThemeContext = React.createContext<Theme>(defaultTheme);
 export const UserContext = React.createContext<User | undefined>(undefined);
+export const FocusedMessageContext = React.createContext<
+  React.Dispatch<React.SetStateAction<string | undefined>> | undefined
+>(undefined);
 
 /** Returns text representation of a provided bytes value (e.g. 1kB, 1GB) */
 export const formatBytes = (size: number, fractionDigits = 2) => {

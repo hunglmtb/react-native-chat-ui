@@ -1,14 +1,15 @@
 import * as React from 'react';
 
-import { LayoutChangeEvent, Pressable, Text, View } from 'react-native';
-import { TextMessage, TextMessageTopLevelProps } from '../TextMessage';
 import {
+  FocusedMessageContext,
   ThemeContext,
   UserContext,
   excludeDerivedMessageProps,
   getUserAvatarNameColor,
   getUserName,
 } from '../../utils';
+import { LayoutChangeEvent, Pressable, Text, View } from 'react-native';
+import { TextMessage, TextMessageTopLevelProps } from '../TextMessage';
 
 import { Avatar } from '../Avatar';
 import { FileMessage } from '../FileMessage';
@@ -16,6 +17,7 @@ import { ImageMessage } from '../ImageMessage';
 import { MessageType } from '../../types';
 import { StatusIcon } from '../StatusIcon';
 import { UsernameLocation } from '../../types';
+import { VideoMessage } from '../VideoMessage';
 import { oneOf } from '@flyerhq/react-native-link-preview';
 import styles from './styles';
 
@@ -38,22 +40,31 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
   renderCustomMessage?: (
     message: MessageType.Custom,
     messageWidth: number,
+    isFocused: boolean,
   ) => React.ReactNode;
   /** Render a file message inside predefined bubble */
   renderFileMessage?: (
     message: MessageType.File,
     messageWidth: number,
+    isFocused: boolean,
   ) => React.ReactNode;
   /** Render an image message inside predefined bubble */
   renderImageMessage?: (
     message: MessageType.Image,
     messageWidth: number,
+    isFocused: boolean,
   ) => React.ReactNode;
   /** Render a text message inside predefined bubble */
   renderTextMessage?: (
     message: MessageType.Text,
     messageWidth: number,
+    isFocused: boolean,
     showName: UsernameLocation,
+  ) => React.ReactNode;
+  renderVideoMessage?: (
+    message: MessageType.Video,
+    messageWidth: number,
+    isFocused: boolean,
   ) => React.ReactNode;
   /** Show user avatars for received messages. Useful for a group chat. */
   showUserAvatars?: boolean;
@@ -63,6 +74,7 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
 
 export interface MessageProps extends MessageTopLevelProps {
   enableAnimation?: boolean;
+  isFocused: boolean;
   message: MessageType.DerivedAny;
   messageWidth: number;
   roundBorder: boolean;
@@ -77,6 +89,7 @@ export interface MessageProps extends MessageTopLevelProps {
 export const Message = React.memo(
   ({
     enableAnimation,
+    isFocused,
     message,
     messageWidth,
     onLayout,
@@ -88,6 +101,7 @@ export const Message = React.memo(
     renderFileMessage,
     renderImageMessage,
     renderTextMessage,
+    renderVideoMessage,
     roundBorder,
     showAvatar,
     showName,
@@ -95,6 +109,7 @@ export const Message = React.memo(
     showUserAvatars,
     usePreviewData,
   }: MessageProps) => {
+    const setFocusedMessage = React.useContext(FocusedMessageContext);
     const theme = React.useContext(ThemeContext);
     const user = React.useContext(UserContext);
 
@@ -155,6 +170,7 @@ export const Message = React.memo(
               // type-coverage:ignore-next-line
               excludeDerivedMessageProps(message) as MessageType.Custom,
               messageWidth,
+              isFocused,
             ) ?? null
           );
         case 'file':
@@ -162,12 +178,14 @@ export const Message = React.memo(
             // type-coverage:ignore-next-line
             excludeDerivedMessageProps(message) as MessageType.File,
             messageWidth,
+            isFocused,
           );
         case 'image':
           return oneOf(
             renderImageMessage,
             <ImageMessage
               {...{
+                isFocused,
                 message,
                 messageWidth,
               }}
@@ -176,6 +194,7 @@ export const Message = React.memo(
             // type-coverage:ignore-next-line
             excludeDerivedMessageProps(message) as MessageType.Image,
             messageWidth,
+            isFocused,
           );
         case 'text':
           return oneOf(
@@ -183,6 +202,7 @@ export const Message = React.memo(
             <TextMessage
               {...{
                 enableAnimation,
+                isFocused,
                 message,
                 messageWidth,
                 onPreviewDataFetched,
@@ -194,7 +214,24 @@ export const Message = React.memo(
             // type-coverage:ignore-next-line
             excludeDerivedMessageProps(message) as MessageType.Text,
             messageWidth,
+            isFocused,
             showName,
+          );
+        case 'video':
+          return oneOf(
+            renderVideoMessage,
+            <VideoMessage
+              {...{
+                isFocused,
+                message,
+                messageWidth,
+              }}
+            />,
+          )(
+            // type-coverage:ignore-next-line
+            excludeDerivedMessageProps(message) as MessageType.Video,
+            messageWidth,
+            isFocused,
           );
         default:
           return null;
@@ -229,9 +266,10 @@ export const Message = React.memo(
             onLongPress={() =>
               onMessageLongPress?.(excludeDerivedMessageProps(message))
             }
-            onPress={() =>
-              onMessagePress?.(excludeDerivedMessageProps(message))
-            }
+            onPress={() => {
+              onMessagePress?.(excludeDerivedMessageProps(message));
+              setFocusedMessage && setFocusedMessage(message.id);
+            }}
             style={pressable}>
             {renderBubbleContainer()}
           </Pressable>

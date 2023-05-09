@@ -32,6 +32,7 @@ export interface TextMessageTopLevelProps {
 
 export interface TextMessageProps extends TextMessageTopLevelProps {
   enableAnimation?: boolean;
+  isFocused: boolean;
   message: MessageType.DerivedText;
   messageWidth: number;
   showName: UsernameLocation;
@@ -39,6 +40,7 @@ export interface TextMessageProps extends TextMessageTopLevelProps {
 
 export const TextMessage = ({
   enableAnimation,
+  isFocused: _isFocused,
   message,
   messageWidth,
   onPreviewDataFetched,

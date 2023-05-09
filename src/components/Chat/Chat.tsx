@@ -11,12 +11,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input';
 import {
-  KeyboardAccessoryView,
-  useComponentSize,
-} from '@flyerhq/react-native-keyboard-accessory-view';
-import {
+  FocusedMessageContext,
   L10nContext,
   ThemeContext,
   UserContext,
@@ -24,6 +20,11 @@ import {
   initLocale,
   unwrap,
 } from '../../utils';
+import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input';
+import {
+  KeyboardAccessoryView,
+  useComponentSize,
+} from '@flyerhq/react-native-keyboard-accessory-view';
 import { Message, MessageTopLevelProps } from '../Message';
 import { MessageType, Theme, User, UsernameLocation } from '../../types';
 
@@ -180,6 +181,13 @@ export const Chat = ({
     [l10nOverride, locale],
   );
 
+  // A single message will have focus when tapped. The focused state causes the
+  // focused message and the blurred message to re-render. Messages receive `isFocused`
+  // for any possible/optional state updates.
+  const [focusedMessage, setFocusedMessage] = React.useState<
+    string | undefined
+  >(undefined);
+
   const { chatMessages, gallery } = calculateChatMessages(messages, user, {
     customDateHeaderText,
     dateFormat,
@@ -309,6 +317,7 @@ export const Chat = ({
         <Message
           {...{
             enableAnimation,
+            isFocused: focusedMessage === message.id,
             message,
             messageWidth,
             onMessageLongPress,
@@ -331,6 +340,7 @@ export const Chat = ({
     },
     [
       enableAnimation,
+      focusedMessage,
       handleMessagePress,
       onMessageLongPress,
       onPreviewDataFetched,
@@ -436,55 +446,57 @@ export const Chat = ({
     <UserContext.Provider value={user}>
       <ThemeContext.Provider value={theme}>
         <L10nContext.Provider value={l10nValue}>
-          <View style={container} onLayout={onLayout}>
-            {customBottomComponent ? (
-              <>
-                <>{renderScrollable()}</>
-                <>{customBottomComponent()}</>
-              </>
-            ) : (
-              <KeyboardAccessoryView
-                renderScrollable={renderScrollable}
-                contentContainerStyle={{ marginBottom: 0 }}
-                contentOffsetKeyboardClosed={
-                  theme.composer?.contentOffsetKeyboardClosed || 0
-                }
-                contentOffsetKeyboardOpened={
-                  initialComposerHeight -
-                  insets.bottom -
-                  (theme.composer?.contentOffsetKeyboardOpened || 0)
-                }
-                spaceBetweenKeyboardAndAccessoryView={
-                  -(theme.composer?.tabBarHeight || 0)
-                }>
-                <Input
-                  {...{
-                    ...unwrap(inputProps),
-                    disableSend,
-                    isAttachmentUploading,
-                    onAttachmentPress,
-                    onSendPress,
-                    onInputTextChanged,
-                    renderScrollable,
-                    sendButtonVisibilityMode,
-                    onLayout: (event: LayoutChangeEvent) => {
-                      if (initialComposerHeight === 0) {
-                        setInitialComposerHeight(
-                          event.nativeEvent.layout.height,
-                        );
-                      }
-                    },
-                  }}
-                />
-              </KeyboardAccessoryView>
-            )}
-            <ImageView
-              imageIndex={imageViewIndex}
-              images={gallery}
-              onRequestClose={handleRequestClose}
-              visible={isImageViewVisible}
-            />
-          </View>
+          <FocusedMessageContext.Provider value={setFocusedMessage}>
+            <View style={container} onLayout={onLayout}>
+              {customBottomComponent ? (
+                <>
+                  <>{renderScrollable()}</>
+                  <>{customBottomComponent()}</>
+                </>
+              ) : (
+                <KeyboardAccessoryView
+                  renderScrollable={renderScrollable}
+                  contentContainerStyle={{ marginBottom: 0 }}
+                  contentOffsetKeyboardClosed={
+                    theme.composer?.contentOffsetKeyboardClosed || 0
+                  }
+                  contentOffsetKeyboardOpened={
+                    initialComposerHeight -
+                    insets.bottom -
+                    (theme.composer?.contentOffsetKeyboardOpened || 0)
+                  }
+                  spaceBetweenKeyboardAndAccessoryView={
+                    -(theme.composer?.tabBarHeight || 0)
+                  }>
+                  <Input
+                    {...{
+                      ...unwrap(inputProps),
+                      disableSend,
+                      isAttachmentUploading,
+                      onAttachmentPress,
+                      onSendPress,
+                      onInputTextChanged,
+                      renderScrollable,
+                      sendButtonVisibilityMode,
+                      onLayout: (event: LayoutChangeEvent) => {
+                        if (initialComposerHeight === 0) {
+                          setInitialComposerHeight(
+                            event.nativeEvent.layout.height,
+                          );
+                        }
+                      },
+                    }}
+                  />
+                </KeyboardAccessoryView>
+              )}
+              <ImageView
+                imageIndex={imageViewIndex}
+                images={gallery}
+                onRequestClose={handleRequestClose}
+                visible={isImageViewVisible}
+              />
+            </View>
+          </FocusedMessageContext.Provider>
         </L10nContext.Provider>
       </ThemeContext.Provider>
     </UserContext.Provider>

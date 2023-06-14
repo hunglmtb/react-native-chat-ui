@@ -23,6 +23,7 @@ export const VideoMessage = ({
   const theme = React.useContext(ThemeContext);
   const user = React.useContext(UserContext);
 
+  const shouldBlur = React.useRef(true);
   const defaultHeight = message.height ?? 0;
   const defaultWidth = message.width ?? 0;
   const [size, setSize] = React.useState<Size>({
@@ -69,8 +70,19 @@ export const VideoMessage = ({
           mimeType={message.mimeType}
           uri={message.uri}
           paused={false}
-          onEnd={() => setFocusedMessage && setFocusedMessage(undefined)}
+          onEnd={() =>
+            shouldBlur.current &&
+            setFocusedMessage &&
+            setFocusedMessage(undefined)
+          }
           onError={() => setFocusedMessage && setFocusedMessage(undefined)}
+          onFullscreenClose={() => {
+            shouldBlur.current = true;
+            setFocusedMessage && setFocusedMessage(undefined);
+          }}
+          onFullscreenOpen={() => {
+            shouldBlur.current = false;
+          }}
           containerStyle={videoContainer}
         />
       )}

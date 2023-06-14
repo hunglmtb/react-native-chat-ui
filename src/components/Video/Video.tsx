@@ -17,6 +17,8 @@ export interface VideoProps {
   mimeType: string;
   onEnd?: () => void;
   onError?: () => void;
+  onFullscreenClose?: () => void;
+  onFullscreenOpen?: () => void;
   paused?: boolean;
   uri: string;
   videoStyle?: ViewStyle | ViewStyle[];
@@ -27,6 +29,8 @@ export const Video = ({
   mimeType,
   onEnd,
   onError,
+  onFullscreenClose,
+  onFullscreenOpen,
   paused = true,
   uri,
   videoStyle,
@@ -61,6 +65,8 @@ export const Video = ({
         onLoadStart={() => setStatus(VideoStatus.Loading)}
         onLoad={() => setStatus(VideoStatus.Loaded)}
         onEnd={onEnd}
+        onFullscreenPlayerDidPresent={onFullscreenOpen}
+        onFullscreenPlayerWillDismiss={onFullscreenClose}
       />
       {isLoading && (
         <View style={spinner}>

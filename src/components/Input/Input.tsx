@@ -20,9 +20,12 @@ import { L10nContext, ThemeContext, UserContext, unwrap } from '../../utils';
 
 import { CircularActivityIndicator } from '../CircularActivityIndicator';
 import { SendButton } from '../SendButton';
-import { Video } from '../Video';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import styles from './styles';
 import { useState } from 'react';
+
+dayjs.extend(duration);
 
 export interface InputTopLevelProps {
   /** Disables the send button. */
@@ -71,6 +74,9 @@ export const Input = ({
     attachmentContainer,
     attachmentIcon,
     attachmentIconContainer,
+    attachmentOverlayVideo,
+    attachmentOverlayVideoDuration,
+    attachmentOverlayVideoImage,
     container,
     fileAttachmentContainer,
     fileAttachmentIconContainer,
@@ -196,19 +202,27 @@ export const Input = ({
   ) => {
     return (
       <View>
-        <Video
-          mimeType={video.mimeType}
-          uri={video.uri}
-          videoStyle={[
+        <Image
+          source={{ uri: video.posterUri }}
+          style={[
             attachmentContainer,
             {
               aspectRatio:
-                video.width && video.height
-                  ? video.width / video.height
-                  : undefined,
+                video.width && video.height ? video.width / video.height : 1,
             },
           ]}
         />
+        <View style={attachmentOverlayVideo}>
+          <Image
+            source={require('../../assets/icon-play.png')}
+            style={attachmentOverlayVideoImage}
+          />
+          {video.duration && (
+            <Text style={attachmentOverlayVideoDuration}>
+              {dayjs.duration(video.duration, 'seconds').format('m:ss')}
+            </Text>
+          )}
+        </View>
         {renderRemoveAttachmentButton(index)}
       </View>
     );

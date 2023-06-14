@@ -80,4 +80,19 @@ export default ({ theme }: { theme: Theme }) =>
       borderWidth: 2,
       borderColor: theme.composer?.removeAttachmentButton?.borderColor,
     },
+    attachmentOverlayVideo: {
+      position: 'absolute',
+      bottom: 0,
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    attachmentOverlayVideoImage: {
+      bottom: 5,
+      left: 8,
+    },
+    attachmentOverlayVideoDuration: {
+      right: 12,
+      ...theme.composer?.videoAttachmentDurationText,
+    },
   });

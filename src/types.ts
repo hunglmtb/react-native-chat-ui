@@ -245,6 +245,7 @@ export interface ThemeComposer {
   sendButton?: ViewStyle;
   sendIcon?: ImageStyle;
   tabBarHeight?: number;
+  videoAttachmentDurationText?: TextStyle;
 }
 
 export interface ThemeDate {

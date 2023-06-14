@@ -204,6 +204,11 @@ export const defaultTheme: Theme = {
       tintColor: PRIMARY,
     },
     tabBarHeight: 0,
+    videoAttachmentDurationText: {
+      color: NEUTRAL_7,
+      fontSize: 12,
+      fontWeight: '500',
+    },
   },
   date: {
     text: {

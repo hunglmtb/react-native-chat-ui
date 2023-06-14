@@ -60,8 +60,8 @@ const styles = ({
     dateHeader: {
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: 32,
-      marginTop: 16,
+      marginBottom: 12,
+      marginTop: 12,
     },
     pressable: {
       maxWidth: messageWidth,

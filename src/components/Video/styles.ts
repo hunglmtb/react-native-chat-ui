@@ -1,28 +1,36 @@
-import { StyleSheet } from 'react-native';
-import { Theme } from '../../types';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
 
-const styles = ({ theme }: { theme: Theme }) => {
+const styles = () => {
   return StyleSheet.create({
-    spinner: {
-      position: 'absolute',
-      top: 8,
-      left: 8,
-      right: 8,
-      bottom: 8,
-      justifyContent: 'center',
-      alignItems: 'center',
+    landscapeLeft: {
+      width: Dimensions.get('screen').height,
+      maxHeight: Dimensions.get('screen').width,
+      ...Platform.select({
+        ios: {
+          paddingHorizontal: 10,
+        },
+        android: {
+          paddingHorizontal: 30,
+        },
+      }),
     },
-    video: {
-      width: '100%',
-      height: '100%',
-      backgroundColor:
-        theme.bubble?.contentRightContainer?.backgroundColor ||
-        theme.colors?.primary,
+    landscapeRight: {
+      width: Dimensions.get('screen').height,
+      maxHeight: Dimensions.get('screen').width,
+      ...Platform.select({
+        ios: {
+          paddingHorizontal: 10,
+        },
+        android: {
+          paddingHorizontal: 30,
+        },
+      }),
     },
-    videoContainer: {
-      height: 150,
-      maxWidth: '100%',
-      alignSelf: 'center',
+    portraitDown: {
+      width: Dimensions.get('screen').width,
+    },
+    portraitUp: {
+      width: Dimensions.get('screen').width,
     },
   });
 };

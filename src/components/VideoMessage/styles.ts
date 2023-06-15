@@ -80,6 +80,11 @@ const styles = ({
         theme.colors?.primary,
     },
     videoContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#000000',
+    },
+    videoPosterContainer: {
       width: 250,
       height: 150,
       maxWidth: '100%',

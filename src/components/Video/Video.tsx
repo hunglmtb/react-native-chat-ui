@@ -1,48 +1,65 @@
 import * as React from 'react';
 
-import { ActivityIndicator, Alert, View, ViewStyle } from 'react-native';
+import { Alert, ViewStyle } from 'react-native';
+import Animated, {
+  AnimatedStyleProp,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
-import RNVideo from 'react-native-video';
-import { ThemeContext } from '../../utils';
+import VideoPlayer from 'react-native-media-console';
 import styles from './styles';
-
-enum VideoStatus {
-  None,
-  Loading,
-  Loaded,
-}
+import { useDeviceRotationSensor } from '../../hooks/useDeviceRotationSensor';
+import { useState } from 'react';
 
 export interface VideoProps {
-  containerStyle?: ViewStyle | ViewStyle[];
   mimeType: string;
-  onEnd?: () => void;
+  onClose?: () => void;
   onError?: () => void;
-  onFullscreenClose?: () => void;
-  onFullscreenOpen?: () => void;
   paused?: boolean;
   uri: string;
-  videoStyle?: ViewStyle | ViewStyle[];
 }
 
 export const Video = ({
-  containerStyle,
   mimeType,
-  onEnd,
+  onClose,
   onError,
-  onFullscreenClose,
-  onFullscreenOpen,
   paused = true,
   uri,
-  videoStyle,
 }: VideoProps) => {
-  const theme = React.useContext(ThemeContext);
+  const { landscapeLeft, landscapeRight, portraitDown, portraitUp } = styles();
 
-  const { spinner, video, videoContainer } = styles({ theme });
-  const [status, setStatus] = React.useState(VideoStatus.None);
-  const isLoading = status === VideoStatus.Loading;
+  const [orientation, setOrientation] = useState('up');
+  const rotation = useSharedValue(0);
+
+  const animatedRotation = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${rotation.value}deg` }],
+    } as AnimatedStyleProp<ViewStyle>;
+  });
+
+  useDeviceRotationSensor(newOrientation => {
+    if (newOrientation !== orientation) {
+      setOrientation(newOrientation);
+      switch (newOrientation) {
+        case 'down':
+          rotation.value = withTiming(rotation.value < 0 ? -180 : 180);
+          break;
+        case 'left':
+          rotation.value = withTiming(90);
+          break;
+        case 'right':
+          rotation.value = withTiming(-90);
+          break;
+        case 'top':
+          rotation.value = withTiming(0);
+          break;
+      }
+    }
+  });
 
   const onVideoError = () => {
-    setStatus(VideoStatus.None);
     onError && onError();
     Alert.alert(
       'Video Playback Error',
@@ -53,26 +70,25 @@ export const Video = ({
   };
 
   return (
-    <View style={[videoContainer, containerStyle]}>
-      <RNVideo
-        style={[video, videoStyle]}
-        source={{ uri, type: mimeType }}
-        controls
+    <Animated.View style={animatedRotation}>
+      <VideoPlayer
+        containerStyle={[
+          orientation === 'left'
+            ? landscapeLeft
+            : orientation === 'right'
+            ? landscapeRight
+            : orientation === 'down'
+            ? portraitDown
+            : portraitUp,
+        ]}
+        disableSeekButtons={true}
+        disableFullscreen={true}
         paused={paused}
-        resizeMode={'contain'}
+        source={{ uri, type: mimeType }}
+        showOnEnd={true}
+        onBack={onClose}
         onError={onVideoError}
-        onFullscreenPlayerDidDismiss={() => setStatus(VideoStatus.None)}
-        onLoadStart={() => setStatus(VideoStatus.Loading)}
-        onLoad={() => setStatus(VideoStatus.Loaded)}
-        onEnd={onEnd}
-        onFullscreenPlayerDidPresent={onFullscreenOpen}
-        onFullscreenPlayerWillDismiss={onFullscreenClose}
       />
-      {isLoading && (
-        <View style={spinner}>
-          <ActivityIndicator color={theme.colors?.secondary} />
-        </View>
-      )}
-    </View>
+    </Animated.View>
   );
 };

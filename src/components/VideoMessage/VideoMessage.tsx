@@ -1,35 +1,21 @@
 import * as React from 'react';
 
-import { FocusedMessageContext, ThemeContext, UserContext } from '../../utils';
+import { FocusedMessageContext, ThemeContext } from '../../utils';
 import { Image, Modal, StatusBar, StyleSheet, View } from 'react-native';
-import { MessageType, Size } from '../../types';
 
+import { MessageType } from '../../types';
 import { Video } from '../Video';
 import styles from './styles';
 
 export interface VideoMessageProps {
   isFocused: boolean;
   message: MessageType.DerivedVideo;
-  /** Maximum message width */
-  messageWidth: number;
 }
 
-export const VideoMessage = ({
-  isFocused,
-  message,
-  messageWidth,
-}: VideoMessageProps) => {
+export const VideoMessage = ({ isFocused, message }: VideoMessageProps) => {
   const setFocusedMessage = React.useContext(FocusedMessageContext);
   const theme = React.useContext(ThemeContext);
-  const user = React.useContext(UserContext);
 
-  const defaultHeight = message.height ?? 0;
-  const defaultWidth = message.width ?? 0;
-  const [size, setSize] = React.useState<Size>({
-    height: defaultHeight,
-    width: defaultWidth,
-  });
-  const aspectRatio = size.width / (size.height || 1);
   const {
     overlayContainer,
     overlayImage,
@@ -37,21 +23,9 @@ export const VideoMessage = ({
     videoContainer,
     videoPosterContainer,
   } = styles({
-    aspectRatio,
     message,
-    messageWidth,
     theme,
-    user,
   });
-
-  React.useEffect(() => {
-    if (defaultHeight <= 0 || defaultWidth <= 0)
-      Image.getSize(
-        message.uri,
-        (width, height) => setSize({ height, width }),
-        () => setSize({ height: 0, width: 0 }),
-      );
-  }, [defaultHeight, defaultWidth, message.uri]);
 
   React.useEffect(() => {
     // Remove the status bar when the video modal is shown.

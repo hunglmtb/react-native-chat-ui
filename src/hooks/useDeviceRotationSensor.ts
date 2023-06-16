@@ -7,6 +7,9 @@ import { gravity } from 'react-native-sensors';
 
 export type Rotation = 'top' | 'down' | 'right' | 'left';
 
+// Build in hysteresis using rotationTriggerAngle offset from 45 degrees
+const rotationTriggerAngle = 10;
+
 export const useDeviceRotationSensor = (
   callback: (rotation: Rotation, degree: number) => void,
 ) => {
@@ -15,22 +18,65 @@ export const useDeviceRotationSensor = (
   useLayoutEffect(() => {
     // We use gravity sensor here because react-native-orientation
     // can't detect landscape orientation when the device's orientation is locked
+    let rotation: Rotation = 'top';
+
     const subscription = gravity.subscribe(({ x, y }) => {
       const radian = Math.atan2(y, x);
       const degree = (radian * 180) / Math.PI;
+      console.log(rotation, degree);
 
-      let rotation: Rotation = 'left';
-      if (degree > -135) rotation = 'top';
-      if (degree > -45) rotation = 'right';
-      if (degree > 45) rotation = 'down';
-      if (degree > 135) rotation = 'left';
+      if (Platform.OS === 'ios') {
+        switch (rotation) {
+          case 'top':
+            if (degree < 0 && degree > -45 + rotationTriggerAngle)
+              rotation = 'right';
+            if (degree < 0 && degree < -135 - rotationTriggerAngle)
+              rotation = 'left';
+            break;
+          case 'down':
+            if (degree > 0 && degree > 135 + rotationTriggerAngle)
+              rotation = 'left';
+            if (degree > 0 && degree < 45 - rotationTriggerAngle)
+              rotation = 'right';
+            break;
+          case 'left':
+            if (degree > 0 && degree < 135 - rotationTriggerAngle)
+              rotation = 'down';
+            if (degree < 0 && degree > -135 + rotationTriggerAngle)
+              rotation = 'top';
+            break;
+          case 'right':
+            if (degree > 45 + rotationTriggerAngle) rotation = 'down';
+            if (degree < -45 - rotationTriggerAngle) rotation = 'top';
+            break;
+        }
+      }
 
       if (Platform.OS === 'android') {
-        rotation = 'right';
-        if (degree > -135) rotation = 'down';
-        if (degree > -45) rotation = 'left';
-        if (degree > 45) rotation = 'top';
-        if (degree > 135) rotation = 'right';
+        switch (rotation) {
+          case 'down':
+            if (degree < 0 && degree > -45 + rotationTriggerAngle)
+              rotation = 'left';
+            if (degree < 0 && degree < -135 - rotationTriggerAngle)
+              rotation = 'right';
+            break;
+          case 'top':
+            if (degree > 0 && degree > 135 + rotationTriggerAngle)
+              rotation = 'right';
+            if (degree > 0 && degree < 45 - rotationTriggerAngle)
+              rotation = 'left';
+            break;
+          case 'right':
+            if (degree > 0 && degree < 135 - rotationTriggerAngle)
+              rotation = 'top';
+            if (degree < 0 && degree > -135 + rotationTriggerAngle)
+              rotation = 'down';
+            break;
+          case 'left':
+            if (degree > 45 + rotationTriggerAngle) rotation = 'top';
+            if (degree < -45 - rotationTriggerAngle) rotation = 'down';
+            break;
+        }
       }
 
       callbackRef.current(rotation, degree);

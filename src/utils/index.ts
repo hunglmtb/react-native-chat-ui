@@ -23,6 +23,11 @@ export const UserContext = React.createContext<User | undefined>(undefined);
 export const FocusedMessageContext = React.createContext<
   React.Dispatch<React.SetStateAction<string | undefined>> | undefined
 >(undefined);
+export const UrlResolverContext = React.createContext<
+  (url: string, callback: (url: string) => void) => void
+>((url, callback) => {
+  callback(url);
+});
 
 /** Returns text representation of a provided bytes value (e.g. 1kB, 1GB) */
 export const formatBytes = (size: number, fractionDigits = 2) => {

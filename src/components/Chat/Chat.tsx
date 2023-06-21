@@ -15,6 +15,7 @@ import {
   FocusedMessageContext,
   L10nContext,
   ThemeContext,
+  UrlResolverContext,
   UserContext,
   calculateChatMessages,
   initLocale,
@@ -99,6 +100,10 @@ export interface ChatProps extends ChatTopLevelProps {
    * @see {@link ChatProps.dateFormat}
    * @see {@link ChatProps.timeFormat} */
   relativeDateTime?: boolean;
+  /** Allows a level of indirection for resolving urls that access remote files (typically attachments)
+   * This is useful for caching files on the device without having to know the local file path. The
+   * local file path should be found given the remote url. */
+  resolveUrl?: (url: string, callback: (url: string) => void) => void;
   /** Show user names for received messages. Useful for a group chat. Will be
    * shown only on text messages. */
   showUserNames?: UsernameLocation;
@@ -146,6 +151,9 @@ export const Chat = ({
   renderFileMessage,
   renderImageMessage,
   renderTextMessage,
+  resolveUrl = (url, callback) => {
+    callback(url);
+  },
   sendButtonVisibilityMode = 'editing',
   showUserAvatars = false,
   showUserNames = 'inside',
@@ -447,55 +455,57 @@ export const Chat = ({
       <ThemeContext.Provider value={theme}>
         <L10nContext.Provider value={l10nValue}>
           <FocusedMessageContext.Provider value={setFocusedMessage}>
-            <View style={container} onLayout={onLayout}>
-              {customBottomComponent ? (
-                <>
-                  <>{renderScrollable()}</>
-                  <>{customBottomComponent()}</>
-                </>
-              ) : (
-                <KeyboardAccessoryView
-                  renderScrollable={renderScrollable}
-                  contentContainerStyle={{ marginBottom: 0 }}
-                  contentOffsetKeyboardClosed={
-                    theme.composer?.contentOffsetKeyboardClosed || 0
-                  }
-                  contentOffsetKeyboardOpened={
-                    initialComposerHeight -
-                    insets.bottom -
-                    (theme.composer?.contentOffsetKeyboardOpened || 0)
-                  }
-                  spaceBetweenKeyboardAndAccessoryView={
-                    -(theme.composer?.tabBarHeight || 0)
-                  }>
-                  <Input
-                    {...{
-                      ...unwrap(inputProps),
-                      disableSend,
-                      isAttachmentUploading,
-                      onAttachmentPress,
-                      onSendPress,
-                      onInputTextChanged,
-                      renderScrollable,
-                      sendButtonVisibilityMode,
-                      onLayout: (event: LayoutChangeEvent) => {
-                        if (initialComposerHeight === 0) {
-                          setInitialComposerHeight(
-                            event.nativeEvent.layout.height,
-                          );
-                        }
-                      },
-                    }}
-                  />
-                </KeyboardAccessoryView>
-              )}
-              <ImageView
-                imageIndex={imageViewIndex}
-                images={gallery}
-                onRequestClose={handleRequestClose}
-                visible={isImageViewVisible}
-              />
-            </View>
+            <UrlResolverContext.Provider value={resolveUrl}>
+              <View style={container} onLayout={onLayout}>
+                {customBottomComponent ? (
+                  <>
+                    <>{renderScrollable()}</>
+                    <>{customBottomComponent()}</>
+                  </>
+                ) : (
+                  <KeyboardAccessoryView
+                    renderScrollable={renderScrollable}
+                    contentContainerStyle={{ marginBottom: 0 }}
+                    contentOffsetKeyboardClosed={
+                      theme.composer?.contentOffsetKeyboardClosed || 0
+                    }
+                    contentOffsetKeyboardOpened={
+                      initialComposerHeight -
+                      insets.bottom -
+                      (theme.composer?.contentOffsetKeyboardOpened || 0)
+                    }
+                    spaceBetweenKeyboardAndAccessoryView={
+                      -(theme.composer?.tabBarHeight || 0)
+                    }>
+                    <Input
+                      {...{
+                        ...unwrap(inputProps),
+                        disableSend,
+                        isAttachmentUploading,
+                        onAttachmentPress,
+                        onSendPress,
+                        onInputTextChanged,
+                        renderScrollable,
+                        sendButtonVisibilityMode,
+                        onLayout: (event: LayoutChangeEvent) => {
+                          if (initialComposerHeight === 0) {
+                            setInitialComposerHeight(
+                              event.nativeEvent.layout.height,
+                            );
+                          }
+                        },
+                      }}
+                    />
+                  </KeyboardAccessoryView>
+                )}
+                <ImageView
+                  imageIndex={imageViewIndex}
+                  images={gallery}
+                  onRequestClose={handleRequestClose}
+                  visible={isImageViewVisible}
+                />
+              </View>
+            </UrlResolverContext.Provider>
           </FocusedMessageContext.Provider>
         </L10nContext.Provider>
       </ThemeContext.Provider>

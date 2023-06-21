@@ -1,6 +1,10 @@
 import * as React from 'react';
 
-import { FocusedMessageContext, ThemeContext } from '../../utils';
+import {
+  FocusedMessageContext,
+  ThemeContext,
+  UrlResolverContext,
+} from '../../utils';
 import { Image, Modal, StatusBar, StyleSheet, View } from 'react-native';
 
 import { MessageType } from '../../types';
@@ -27,6 +31,16 @@ export const VideoMessage = ({ isFocused, message }: VideoMessageProps) => {
     theme,
   });
 
+  const [resolvedPosterUri, setResolvedPosterUri] = React.useState<string>('');
+  const [resolvedVideoUri, setResolvedVideoUri] = React.useState<string>('');
+  const resolveUrl = React.useContext(UrlResolverContext);
+
+  React.useEffect(() => {
+    resolveUrl(message.posterUri || '', setResolvedPosterUri);
+    resolveUrl(message.uri, setResolvedVideoUri);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   React.useEffect(() => {
     // Remove the status bar when the video modal is shown.
     StatusBar.setHidden(isFocused);
@@ -34,34 +48,41 @@ export const VideoMessage = ({ isFocused, message }: VideoMessageProps) => {
 
   return (
     <>
-      {!isFocused ? (
-        <View style={videoPosterContainer}>
+      <View style={videoPosterContainer}>
+        {resolvedPosterUri && (
           <Image
             accessibilityRole="image"
             style={poster}
-            source={{ uri: message.posterUri }}
+            source={{ uri: resolvedPosterUri }}
             resizeMode={'contain'}
           />
-          <View style={overlayContainer}>
-            <Image
-              source={require('../../assets/icon-play.png')}
-              style={overlayImage}
-            />
-          </View>
+        )}
+        <View style={overlayContainer}>
+          <Image
+            source={require('../../assets/icon-play.png')}
+            style={overlayImage}
+          />
         </View>
-      ) : (
+      </View>
+      {isFocused && (
         <Modal
           animationType={'fade'}
           statusBarTranslucent={true}
           hardwareAccelerated={true}>
           <View style={[StyleSheet.absoluteFill, videoContainer]}>
-            <Video
-              mimeType={message.mimeType}
-              uri={message.uri}
-              paused={false}
-              onClose={() => setFocusedMessage && setFocusedMessage(undefined)}
-              onError={() => setFocusedMessage && setFocusedMessage(undefined)}
-            />
+            {resolvedVideoUri && (
+              <Video
+                mimeType={message.mimeType}
+                uri={resolvedVideoUri}
+                paused={false}
+                onClose={() =>
+                  setFocusedMessage && setFocusedMessage(undefined)
+                }
+                onError={() =>
+                  setFocusedMessage && setFocusedMessage(undefined)
+                }
+              />
+            )}
           </View>
         </Modal>
       )}

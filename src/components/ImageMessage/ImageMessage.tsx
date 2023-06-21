@@ -2,7 +2,12 @@ import * as React from 'react';
 
 import { Image, ImageBackground, Text, View } from 'react-native';
 import { MessageType, Size } from '../../types';
-import { ThemeContext, UserContext, formatBytes } from '../../utils';
+import {
+  ThemeContext,
+  UrlResolverContext,
+  UserContext,
+  formatBytes,
+} from '../../utils';
 
 import styles from './styles';
 
@@ -48,6 +53,14 @@ export const ImageMessage = ({
     user,
   });
 
+  const [resolvedImageUri, setResolvedImageUri] = React.useState<string>();
+  const resolveUrl = React.useContext(UrlResolverContext);
+
+  React.useEffect(() => {
+    resolveUrl(message.uri, setResolvedImageUri);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   React.useEffect(() => {
     if (defaultHeight <= 0 || defaultWidth <= 0)
       Image.getSize(
@@ -58,11 +71,12 @@ export const ImageMessage = ({
   }, [defaultHeight, defaultWidth, message.uri]);
 
   const renderImage = () => {
+    if (!resolvedImageUri) return null;
     return (
       <Image
         accessibilityRole="image"
         resizeMode={isMinimized ? 'cover' : 'contain'}
-        source={{ uri: message.uri }}
+        source={{ uri: resolvedImageUri }}
         style={
           isMinimized
             ? minimizedImage

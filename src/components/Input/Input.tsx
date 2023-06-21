@@ -8,6 +8,7 @@ import {
 import {
   FlatList,
   Image,
+  Keyboard,
   LayoutChangeEvent,
   ListRenderItem,
   Platform,
@@ -104,6 +105,7 @@ export const Input = ({
   };
 
   const handleAttachmentPress = async () => {
+    Keyboard.dismiss();
     if (!onAttachmentPress) return;
     const newAttachments = await onAttachmentPress();
     if (newAttachments.length > 0) {

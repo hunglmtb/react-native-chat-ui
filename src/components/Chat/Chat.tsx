@@ -6,8 +6,10 @@ import {
   InteractionManager,
   LayoutAnimation,
   LayoutChangeEvent,
+  Modal,
   StatusBar,
   StatusBarProps,
+  StyleSheet,
   Text,
   View,
 } from 'react-native';
@@ -30,8 +32,10 @@ import { Message, MessageTopLevelProps } from '../Message';
 import { MessageType, Theme, User, UsernameLocation } from '../../types';
 
 import { CircularActivityIndicator } from '../CircularActivityIndicator';
+import FileViewer from 'react-native-file-viewer';
 import ImageView from './ImageView';
 import TypingIndicator from '../TypingIndicator/TypingIndicator';
+import { Video } from '../Video';
 import calendar from 'dayjs/plugin/calendar';
 import dayjs from 'dayjs';
 import { defaultTheme } from '../../theme';
@@ -151,8 +155,8 @@ export const Chat = ({
   renderFileMessage,
   renderImageMessage,
   renderTextMessage,
-  resolveUrl = (url, callback) => {
-    callback(url);
+  resolveUrl = async url => {
+    return url;
   },
   sendButtonVisibilityMode = 'editing',
   showUserAvatars = false,
@@ -172,6 +176,7 @@ export const Chat = ({
     footer,
     footerLoadingPage,
     headerIsTyping,
+    videoContainer,
   } = styles({ theme });
 
   const { onLayout, size } = useComponentSize();
@@ -183,6 +188,9 @@ export const Chat = ({
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({});
   const [initialComposerHeight, setInitialComposerHeight] = React.useState(0);
   const insets = useSafeAreaInsets();
+  const [isVideoViewVisible, setIsVideoViewVisible] = React.useState(false);
+  const videoMimeType = React.useRef<string>();
+  const resolvedVideoUri = React.useRef<string>();
 
   const l10nValue = React.useMemo(
     () => ({ ...l10n[locale], ...unwrap(l10nOverride) }),
@@ -263,6 +271,16 @@ export const Chat = ({
     [isLastPage, isNextPageLoading, messages.length, onEndReached],
   );
 
+  const handleFilePress = React.useCallback((message: MessageType.File) => {
+    resolveUrl(message.uri, resolved => {
+      FileViewer.open(resolved, {
+        showOpenWithDialog: true,
+        showAppsSuggestions: true,
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleImagePress = React.useCallback(
     (message: MessageType.Image) => {
       setImageViewIndex(
@@ -281,21 +299,54 @@ export const Chat = ({
     [gallery],
   );
 
+  const handleVideoPress = React.useCallback((message: MessageType.Video) => {
+    resolveUrl(message.uri, resolved => {
+      resolvedVideoUri.current = resolved;
+      videoMimeType.current = message.mimeType;
+      setIsVideoViewVisible(true);
+
+      setStackEntry(
+        StatusBar.pushStackEntry({
+          hidden: true,
+        }),
+      );
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleMessagePress = React.useCallback(
     (message: MessageType.Any) => {
+      if (message.type === 'file') {
+        handleFilePress(message);
+      }
       if (message.type === 'image' && !disableImageGallery) {
         handleImagePress(message);
       }
+      if (message.type === 'video') {
+        handleVideoPress(message);
+      }
       onMessagePress?.(message);
     },
-    [disableImageGallery, handleImagePress, onMessagePress],
+    [
+      disableImageGallery,
+      handleFilePress,
+      handleImagePress,
+      handleVideoPress,
+      onMessagePress,
+    ],
   );
 
   // TODO: Tapping on a close button results in the next warning:
   // `An update to ImageViewing inside a test was not wrapped in act(...).`
   /* istanbul ignore next */
-  const handleRequestClose = () => {
+  const handleImageViewerClose = () => {
     setIsImageViewVisible(false);
+    StatusBar.popStackEntry(stackEntry);
+  };
+
+  const handleVideoPlayerClose = () => {
+    setFocusedMessage && setFocusedMessage(undefined);
+    setIsVideoViewVisible(false);
     StatusBar.popStackEntry(stackEntry);
   };
 
@@ -501,9 +552,26 @@ export const Chat = ({
                 <ImageView
                   imageIndex={imageViewIndex}
                   images={gallery}
-                  onRequestClose={handleRequestClose}
+                  onRequestClose={handleImageViewerClose}
                   visible={isImageViewVisible}
                 />
+                <Modal
+                  animationType={'slide'}
+                  statusBarTranslucent={true}
+                  hardwareAccelerated={true}
+                  visible={isVideoViewVisible}>
+                  <View style={[StyleSheet.absoluteFill, videoContainer]}>
+                    <Video
+                      mimeType={videoMimeType.current || ''}
+                      uri={resolvedVideoUri.current || ''}
+                      paused={false}
+                      onClose={handleVideoPlayerClose}
+                      onError={() =>
+                        setFocusedMessage && setFocusedMessage(undefined)
+                      }
+                    />
+                  </View>
+                </Modal>
               </View>
             </UrlResolverContext.Provider>
           </FocusedMessageContext.Provider>

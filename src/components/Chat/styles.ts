@@ -37,4 +37,9 @@ export default ({ theme }: { theme: Theme }) =>
       paddingBottom: 15,
       justifyContent: 'center',
     },
+    videoContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#000000',
+    },
   });

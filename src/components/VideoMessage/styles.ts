@@ -27,11 +27,6 @@ const styles = ({
         theme.bubble?.contentRightContainer?.backgroundColor ||
         theme.colors?.primary,
     },
-    videoContainer: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#000000',
-    },
     videoPosterContainer: {
       width: Dimensions.get('screen').width * 0.6,
       aspectRatio:

@@ -14,7 +14,9 @@ const styles = ({ theme }: { theme: Theme }) =>
       backgroundColor: theme.bubble?.contentLeftContainer?.backgroundColor,
       ...theme.bubble?.contentLeftContainer,
     },
-    container: {},
+    container: {
+      marginBottom: 7,
+    },
     namesText: {
       marginLeft: 8,
       paddingBottom: 5,

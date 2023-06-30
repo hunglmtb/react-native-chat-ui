@@ -8,6 +8,7 @@ const styles = ({
   messageWidth,
   roundBorder,
   showName,
+  showStatus,
   theme,
 }: {
   currentUserIsAuthor: boolean;
@@ -15,6 +16,7 @@ const styles = ({
   messageWidth: number;
   roundBorder: boolean;
   showName: UsernameLocation;
+  showStatus: boolean;
   theme: Theme;
 }) => {
   const restContainer = currentUserIsAuthor
@@ -32,7 +34,8 @@ const styles = ({
       justifyContent: !currentUserIsAuthor ? 'flex-end' : 'flex-start',
       flex: 1,
       flexDirection: 'row',
-      marginBottom: message.type === 'dateHeader' ? 0 : 4 + message.offset,
+      marginBottom:
+        message.type === 'dateHeader' || showStatus ? 0 : 4 + message.offset,
       marginLeft: currentUserIsAuthor
         ? 0
         : theme.bubble?.containerLeft?.marginLeft || 0,

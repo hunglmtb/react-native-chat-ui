@@ -24,19 +24,14 @@ export default ({ theme }: { theme: Theme }) =>
       flexGrow: 1,
       ...theme.list?.contentContainer,
     },
-    footer: {
-      height: 16,
-    },
+    footer: {},
     footerLoadingPage: {
       alignItems: 'center',
       justifyContent: 'center',
       marginTop: 16,
       height: 32,
     },
-    headerIsTyping: {
-      paddingBottom: 15,
-      justifyContent: 'center',
-    },
+    headerIsTyping: {},
     videoContainer: {
       alignItems: 'center',
       justifyContent: 'center',

@@ -123,6 +123,7 @@ export const Message = React.memo(
         messageWidth,
         roundBorder,
         showName,
+        showStatus,
         theme,
       });
 

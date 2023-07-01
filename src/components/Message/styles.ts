@@ -66,6 +66,9 @@ const styles = ({
       marginBottom: 12,
       marginTop: 12,
     },
+    emojiContentContainer: {
+      backgroundColor: 'transparent',
+    },
     pressable: {
       maxWidth: messageWidth,
     },

@@ -20,6 +20,10 @@ const styles = ({
         ? theme.bubble?.linkDescriptionTextRight
         : theme.bubble?.linkDescriptionTextLeft),
     },
+    emojiText: {
+      fontSize: 50,
+      lineHeight: 58,
+    },
     headerText: {
       color: getUserAvatarNameColor(message.author, theme.avatar?.colors),
       ...theme.bubble?.headerText,

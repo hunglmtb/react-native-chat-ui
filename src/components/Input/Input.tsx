@@ -17,7 +17,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { L10nContext, ThemeContext, UserContext, unwrap } from '../../utils';
+import {
+  L10nContext,
+  ThemeContext,
+  UserContext,
+  isEmojiStr,
+  unwrap,
+} from '../../utils';
 
 import { CircularActivityIndicator } from '../CircularActivityIndicator';
 import { SendButton } from '../SendButton';
@@ -79,6 +85,7 @@ export const Input = ({
     attachmentOverlayVideoDuration,
     attachmentOverlayVideoImage,
     container,
+    emojiText,
     fileAttachmentContainer,
     fileAttachmentIconContainer,
     fileAttachmentName,
@@ -97,6 +104,7 @@ export const Input = ({
   const [attachments, setAttachments] = useState<Attachment[]>([]);
 
   const value = text;
+  const isEmoji = isEmojiStr(value);
 
   const handleChangeText = (newText: string) => {
     // Track local state in case `onChangeText` is provided and `value` is not
@@ -281,7 +289,11 @@ export const Input = ({
           placeholder={l10n.inputPlaceholder}
           placeholderTextColor={theme.composer?.placeholderTextColor}
           underlineColorAndroid="transparent"
-          style={[input, attachments.length > 0 ? inputAttachmentDivider : {}]}
+          style={[
+            input,
+            isEmoji ? emojiText : {},
+            attachments.length > 0 ? inputAttachmentDivider : {},
+          ]}
           onChangeText={handleChangeText}
           value={value}
         />

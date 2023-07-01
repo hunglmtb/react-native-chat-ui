@@ -43,6 +43,14 @@ export const formatBytes = (size: number, fractionDigits = 2) => {
 /** Returns size in bytes of the provided text */
 export const getTextSizeInBytes = (text: string) => new Blob([text]).size;
 
+/** Returns true if text is composed of only emojis up to a count of 3. */
+export const isEmojiStr = (text: string) => {
+  const count = [...new Intl.Segmenter().segment(text)].length;
+  return count > 3
+    ? false
+    : text?.replaceAll(/[\p{Extended_Pictographic}]/gu, '').length === 0;
+};
+
 /** Returns user avatar and name color based on the ID */
 export const getUserAvatarNameColor = (user: User, colors?: ColorValue[]) => {
   colors = colors || ['#000000'];

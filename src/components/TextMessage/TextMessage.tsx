@@ -12,6 +12,7 @@ import {
   UserContext,
   excludeDerivedMessageProps,
   getUserName,
+  isEmojiStr,
 } from '../../utils';
 
 import ParsedText from 'react-native-parsed-text';
@@ -54,8 +55,10 @@ export const TextMessage = ({
       ? message.previewData
       : undefined,
   );
+  const isEmoji = isEmojiStr(message.text);
   const {
     descriptionText,
+    emojiText,
     headerText,
     titleText,
     text,
@@ -174,7 +177,7 @@ export const TextMessage = ({
           ? renderUsername(getUserName(message.author))
           : null
       }
-      <Text style={text}>{message.text}</Text>
+      <Text style={[text, isEmoji ? emojiText : {}]}>{message.text}</Text>
     </View>
   );
 };

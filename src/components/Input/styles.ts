@@ -30,6 +30,10 @@ export default ({ theme }: { theme: Theme }) =>
       paddingHorizontal: 24,
       paddingVertical: 20,
     },
+    emojiText: {
+      fontSize: 50,
+      lineHeight: 58,
+    },
     fileAttachmentContainer: {
       borderWidth: 1,
       justifyContent: 'center',

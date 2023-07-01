@@ -7,6 +7,7 @@ import {
   excludeDerivedMessageProps,
   getUserAvatarNameColor,
   getUserName,
+  isEmojiStr,
 } from '../../utils';
 import { LayoutChangeEvent, Pressable, Text, View } from 'react-native';
 import { TextMessage, TextMessageTopLevelProps } from '../TextMessage';
@@ -116,16 +117,22 @@ export const Message = React.memo(
     const currentUserIsAuthor =
       message.type !== 'dateHeader' && user?.id === message.author.id;
 
-    const { container, contentContainer, dateHeader, pressable, username } =
-      styles({
-        currentUserIsAuthor,
-        message,
-        messageWidth,
-        roundBorder,
-        showName,
-        showStatus,
-        theme,
-      });
+    const {
+      container,
+      contentContainer,
+      dateHeader,
+      emojiContentContainer,
+      pressable,
+      username,
+    } = styles({
+      currentUserIsAuthor,
+      message,
+      messageWidth,
+      roundBorder,
+      showName,
+      showStatus,
+      theme,
+    });
 
     if (message.type === 'dateHeader') {
       return (
@@ -137,10 +144,13 @@ export const Message = React.memo(
 
     const renderBubbleContainer = () => {
       const child = renderMessage();
+      const isEmoji = message.type === 'text' && isEmojiStr(message.text);
       return oneOf(
         renderBubble,
         <>
-          <View style={contentContainer} testID="ContentContainer">
+          <View
+            style={[contentContainer, isEmoji ? emojiContentContainer : {}]}
+            testID="ContentContainer">
             {child}
           </View>
           <View style={{ alignItems: 'flex-end' }}>

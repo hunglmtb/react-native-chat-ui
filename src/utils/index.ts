@@ -14,6 +14,7 @@ import { ColorValue } from 'react-native';
 import dayjs from 'dayjs';
 import { defaultTheme } from '../theme';
 import { l10n } from '../l10n';
+import toArray from 'lodash/toArray';
 
 export const L10nContext = React.createContext<
   (typeof l10n)[keyof typeof l10n]
@@ -45,10 +46,16 @@ export const getTextSizeInBytes = (text: string) => new Blob([text]).size;
 
 /** Returns true if text is composed of only emojis up to a count of 3. */
 export const isEmojiStr = (text: string) => {
-  const count = [...new Intl.Segmenter().segment(text)].length;
-  return count > 3
-    ? false
-    : text?.replaceAll(/[\p{Extended_Pictographic}]/gu, '').length === 0;
+  const nonEmojiCount = toArray(
+    text.replaceAll(
+      /[^a-z0-9\s!@#%^&*()_+\-=[\]{}|;':",./\\<>?~`èéêëēėęÿûüùúūîïíīįìôöòóœøōõàáâäæãåāßśšžźżçćčñń]/gi,
+      '',
+    ),
+  ).length;
+  const emojiCount = toArray(
+    text.replaceAll(/[\P{Extended_Pictographic}]/gu, ''),
+  ).length;
+  return nonEmojiCount === 0 && emojiCount >= 1 && emojiCount <= 3;
 };
 
 /** Returns user avatar and name color based on the ID */

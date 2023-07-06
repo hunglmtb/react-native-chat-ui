@@ -36,8 +36,14 @@ export namespace MessageType {
     id: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     metadata?: Record<string, any>;
-    roomId?: string;
-    status?: 'delivered' | 'error' | 'seen' | 'sending' | 'sent';
+    // key is recipient user id.
+    readBy?: {
+      [key in string]: {
+        name: string;
+        readAt: string;
+      };
+    };
+    status?: 'delivered' | 'error' | 'sending' | 'seen';
     type: 'custom' | 'file' | 'image' | 'text' | 'unsupported' | 'video';
     updatedAt?: number;
   }

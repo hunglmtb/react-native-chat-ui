@@ -19,7 +19,6 @@ export const StatusIcon = React.memo(
 
     switch (status) {
       case 'delivered':
-      case 'sent':
         statusIcon = theme.icons?.deliveredIcon?.() ?? (
           <Image
             source={require('../../assets/icon-delivered.png')}

@@ -16,6 +16,7 @@ const styles = ({ theme }: { theme: Theme }) =>
     },
     container: {
       marginBottom: 7,
+      marginLeft: 12,
     },
     namesText: {
       marginLeft: 8,

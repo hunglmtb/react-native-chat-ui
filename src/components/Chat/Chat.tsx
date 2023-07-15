@@ -469,7 +469,7 @@ export const Chat = ({
           flatListContentContainer,
           { justifyContent: chatMessages.length !== 0 ? undefined : 'center' },
         ]}
-        initialNumToRender={10}
+        initialNumToRender={25}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
         ListHeaderComponent={renderListHeaderComponent}

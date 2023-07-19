@@ -5,6 +5,7 @@ import {
   FlatListProps,
   GestureResponderHandlers,
   InteractionManager,
+  Keyboard,
   LayoutAnimation,
   LayoutChangeEvent,
   Modal,
@@ -248,6 +249,13 @@ export const Chat = ({
       animationRef.current = true;
     }
   }, [enableAnimation, messages]);
+
+  Keyboard.addListener('keyboardWillShow', () => {
+    list.current?.scrollToIndex({
+      index: 0,
+      animated: true,
+    });
+  });
 
   const handleEndReached = React.useCallback(
     // Ignoring because `scroll` event for some reason doesn't trigger even basic

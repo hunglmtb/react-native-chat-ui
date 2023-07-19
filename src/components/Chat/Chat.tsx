@@ -3,6 +3,7 @@ import * as React from 'react';
 import {
   FlatList,
   FlatListProps,
+  GestureResponderHandlers,
   InteractionManager,
   LayoutAnimation,
   LayoutChangeEvent,
@@ -462,7 +463,7 @@ export const Chat = ({
   );
 
   const renderScrollable = React.useCallback(
-    () => (
+    (panHandlers?: GestureResponderHandlers) => (
       <FlatList
         automaticallyAdjustContentInsets={false}
         contentContainerStyle={[
@@ -480,11 +481,12 @@ export const Chat = ({
         {...unwrap(flatListProps)}
         data={chatMessages}
         inverted
-        keyboardDismissMode="none"
+        keyboardDismissMode={'interactive'}
         keyExtractor={keyExtractor}
         onEndReached={handleEndReached}
         ref={list}
         renderItem={renderItem}
+        {...panHandlers}
       />
     ),
     [

@@ -98,6 +98,7 @@ export interface ChatProps extends ChatTopLevelProps {
    */
   timeFormat?: string
   user: User
+  onAvatarPress?: (author: MessageType.Any['author']) => void
 }
 
 /** Entry component, represents the complete chat */
@@ -134,6 +135,7 @@ export const Chat = ({
   timeFormat,
   usePreviewData = true,
   user,
+  onAvatarPress
 }: ChatProps) => {
   const {
     container,
@@ -304,6 +306,7 @@ export const Chat = ({
             showStatus,
             showUserAvatars,
             usePreviewData,
+            onAvatarPress
           }}
         />
       )
@@ -322,6 +325,7 @@ export const Chat = ({
       size.width,
       usePreviewData,
       user.id,
+      onAvatarPress
     ]
   )
 

@@ -1,6 +1,6 @@
 import { PreviewData } from '@flyerhq/react-native-link-preview'
 import * as React from 'react'
-import { ColorValue, ImageURISource, TextStyle } from 'react-native'
+import {ColorValue, ImageStyle, ImageURISource, TextStyle} from 'react-native'
 
 export namespace MessageType {
   export type Any = Custom | File | Image | Text | Unsupported
@@ -129,11 +129,19 @@ export interface Size {
 /** Base chat theme containing all required properties to make a theme.
  * Implement this interface if you want to create a custom theme. */
 export interface Theme {
+  avatar?: ThemeAvatar
   borders: ThemeBorders
   colors: ThemeColors
   fonts: ThemeFonts
   icons?: ThemeIcons
   insets: ThemeInsets
+}
+
+export interface ThemeAvatar {
+    colors?: ColorValue[];
+    imageBackgroundColor?: ColorValue;
+    text?: TextStyle;
+    image?: ImageStyle;
 }
 
 export interface ThemeBorders {

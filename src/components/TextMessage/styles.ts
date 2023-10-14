@@ -20,12 +20,12 @@ const styles = ({
       marginTop: 4,
     },
     headerText: {
+        marginBottom: 6,
       ...theme.fonts.userNameTextStyle,
       color: getUserAvatarNameColor(
         message.author,
         theme.colors.userAvatarNameColors
       ),
-      marginBottom: 6,
     },
     titleText:
       user?.id === message.author.id

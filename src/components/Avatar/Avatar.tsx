@@ -21,12 +21,6 @@ export const Avatar = React.memo(
     onAvatarPress?: (author: MessageType.Any['author']) => void
   }) => {
     const renderAvatar = () => {
-      const color = getUserAvatarNameColor(
-        author,
-        theme.colors.userAvatarNameColors
-      )
-      const initials = getUserInitials(author)
-
       if (author.imageUrl) {
         return (
           <Image
@@ -42,6 +36,8 @@ export const Avatar = React.memo(
         )
       }
 
+      const color = getUserAvatarNameColor(author, theme.colors.userAvatarNameColors)
+      const initials = getUserInitials(author)
       return (
         <View style={[styles.avatarBackground, theme.avatar?.image || {}, { backgroundColor: color }]}>
           <Text style={theme.fonts.userAvatarTextStyle}>{initials}</Text>

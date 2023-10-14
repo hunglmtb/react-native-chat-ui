@@ -1,6 +1,6 @@
 {
   "name": "@hunglmtb/react-native-chat-ui",
-  "version": "1.4.9",
+  "version": "1.4.11",
   "description": "Actively maintained, community-driven chat UI implementation with an optional Firebase BaaS.",
   "homepage": "https://flyer.chat",
   "repository": {
@@ -35,6 +35,7 @@
     "cp": "rm -rf lib && tsc -p . && copyup src/assets/*.png lib",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "yarn compile",
+    "tsc": "tsc -p . ",
     "test": "jest",
     "type-coverage": "type-coverage"
   },

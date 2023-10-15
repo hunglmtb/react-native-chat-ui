@@ -203,4 +203,5 @@ export interface User {
   metadata?: Record<string, any>
   role?: 'admin' | 'agent' | 'moderator' | 'user'
   updatedAt?: number
+  asyncLoadAvatar?: () => Promise<string>
 }

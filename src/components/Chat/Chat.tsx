@@ -99,6 +99,7 @@ export interface ChatProps extends ChatTopLevelProps {
   timeFormat?: string
   user: User
   onAvatarPress?: (author: MessageType.Any['author']) => void
+  inputActionView?: React.ReactNode
 }
 
 /** Entry component, represents the complete chat */
@@ -135,7 +136,8 @@ export const Chat = ({
   timeFormat,
   usePreviewData = true,
   user,
-  onAvatarPress
+  onAvatarPress,
+  inputActionView
 }: ChatProps) => {
   const {
     container,
@@ -430,6 +432,7 @@ export const Chat = ({
                     renderScrollable,
                     sendButtonVisibilityMode,
                     textInputProps,
+                    inputActionView
                   }}
                 />
               </KeyboardAccessoryView>

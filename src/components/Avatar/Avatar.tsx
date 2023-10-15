@@ -3,6 +3,7 @@ import {Image, Pressable, StyleSheet, Text, View} from 'react-native'
 
 import { MessageType, Theme } from '../../types'
 import { getUserAvatarNameColor, getUserInitials } from '../../utils'
+import {useEffect, useState} from "react";
 
 export const Avatar = React.memo(
   ({
@@ -20,13 +21,22 @@ export const Avatar = React.memo(
     theme: Theme
     onAvatarPress?: (author: MessageType.Any['author']) => void
   }) => {
+      const {imageUrl: originImageUrl, asyncLoadAvatar} = author || {}
+      const [loading, setLoading] = useState(false)
+      const [imageUrl, setImageUrl] = useState(originImageUrl)
+      useEffect(()=>{
+          if(!imageUrl && !loading) asyncLoadAvatar?.().then((imgUrl) => {
+              setLoading(true)
+              setImageUrl(imgUrl)
+          })
+      }, [imageUrl, loading, asyncLoadAvatar])
     const renderAvatar = () => {
-      if (author.imageUrl) {
+      if (imageUrl) {
         return (
           <Image
             accessibilityRole='image'
             resizeMode='cover'
-            source={{ uri: author.imageUrl }}
+            source={{ uri: imageUrl }}
             style={[
               styles.image,
               theme.avatar?.image || {},

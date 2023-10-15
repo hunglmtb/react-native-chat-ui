@@ -34,6 +34,7 @@ export interface InputTopLevelProps {
 export interface InputAdditionalProps {
   attachmentButtonProps?: AttachmentButtonAdditionalProps
   attachmentCircularActivityIndicatorProps?: CircularActivityIndicatorProps
+  inputActionView?: React.ReactNode
 }
 
 export type InputProps = InputTopLevelProps & InputAdditionalProps
@@ -48,6 +49,7 @@ export const Input = ({
   onSendPress,
   sendButtonVisibilityMode,
   textInputProps,
+  inputActionView,
 }: InputProps) => {
   const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
@@ -107,6 +109,7 @@ export const Input = ({
         onChangeText={handleChangeText}
         value={value}
       />
+      {inputActionView?inputActionView:null}
       {sendButtonVisibilityMode === 'always' ||
       (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
         <SendButton onPress={handleSend} />

@@ -106,7 +106,7 @@ export const Message = React.memo(
 
     if (message.type === 'dateHeader') {
       return (
-        <View style={dateHeader}>
+        <View style={[dateHeader, theme.dateHeader || {}]}>
           <Text style={theme.fonts.dateDividerTextStyle}>{message.text}</Text>
         </View>
       )
@@ -183,7 +183,7 @@ export const Message = React.memo(
     }
 
     return (
-      <View style={container}>
+      <View style={[container, (currentUserIsAuthor? theme.message?.me?.messageContainer:theme.message?.other?.messageContainer) || {}]}>
         <Avatar
           {...{
             author: message.author,

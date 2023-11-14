@@ -145,14 +145,14 @@ export const TextMessage = ({
       }}
     />
   ) : (
-    <View style={textContainer}>
+    <View style={[textContainer, (user?.id === message.author.id ? theme.message?.me?.textContainer :theme.message?.other?.textContainer || {})]}>
       {
         // Tested inside the link preview
         /* istanbul ignore next */ showName
           ? renderPreviewHeader(getUserName(message.author))
           : null
       }
-      <Text style={text}>{message.text}</Text>
+      <Text style={[text, (user?.id === message.author.id ? theme.message?.me?.text :theme.message?.other?.text || {})]}>{message.text}</Text>
     </View>
   )
 }

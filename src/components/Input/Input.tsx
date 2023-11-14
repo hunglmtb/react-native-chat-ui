@@ -80,7 +80,7 @@ export const Input = ({
   }
 
   return (
-    <View style={container}>
+    <View style={[container, theme.input?.container || {}]}>
       {user &&
         (isAttachmentUploading ? (
           <CircularActivityIndicator
@@ -105,7 +105,7 @@ export const Input = ({
         underlineColorAndroid='transparent'
         {...textInputProps}
         // Keep our implementation but allow user to use these `TextInputProps`
-        style={[input, textInputProps?.style]}
+        style={[input, textInputProps?.style, theme.input?.textInput || {}]}
         onChangeText={handleChangeText}
         value={value}
       />

@@ -60,7 +60,7 @@ export const Avatar = React.memo(
           testID='AvatarContainer'
           onPress={onAvatarPress ? () => onAvatarPress?.(author) : undefined}
       >
-        {showAvatar ? renderAvatar() : <View style={styles.placeholder} />}
+        {showAvatar ? renderAvatar() : <View style={[styles.placeholder, theme.avatar?.image]} />}
       </Pressable>
     ) : null
   }

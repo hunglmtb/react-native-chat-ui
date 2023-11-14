@@ -1,6 +1,6 @@
 import { PreviewData } from '@flyerhq/react-native-link-preview'
 import * as React from 'react'
-import {ColorValue, ImageStyle, ImageURISource, TextStyle} from 'react-native'
+import {ColorValue, ImageStyle, ImageURISource, TextStyle, StyleProp, ViewStyle} from 'react-native'
 
 export namespace MessageType {
   export type Any = Custom | File | Image | Text | Unsupported
@@ -135,13 +135,34 @@ export interface Theme {
   fonts: ThemeFonts
   icons?: ThemeIcons
   insets: ThemeInsets
+  dateHeader?: StyleProp<ViewStyle>
+  input?: {
+    container?: StyleProp<ViewStyle>
+    textInput?: StyleProp<TextStyle>
+  }
+  scroll?: {
+    flatList?: StyleProp<ViewStyle>
+    contentFlatList?: StyleProp<ViewStyle>
+  }
+  message?: {
+    me?: {
+      text?: StyleProp<TextStyle>
+      textContainer?: StyleProp<ViewStyle>
+      messageContainer?: StyleProp<ViewStyle>
+    }
+    other?: {
+      text?: StyleProp<TextStyle>
+      textContainer?: StyleProp<ViewStyle>
+      messageContainer?: StyleProp<ViewStyle>
+    }
+  }
 }
 
 export interface ThemeAvatar {
     colors?: ColorValue[];
     imageBackgroundColor?: ColorValue;
     text?: TextStyle;
-    image?: ImageStyle;
+    image?: StyleProp<ImageStyle>;
 }
 
 export interface ThemeBorders {
@@ -163,7 +184,7 @@ export interface ThemeColors {
 }
 
 export interface ThemeFonts {
-  dateDividerTextStyle: TextStyle
+  dateDividerTextStyle: StyleProp<TextStyle>
   emptyChatPlaceholderTextStyle: TextStyle
   inputTextStyle: TextStyle
   receivedMessageBodyTextStyle: TextStyle
@@ -174,7 +195,7 @@ export interface ThemeFonts {
   sentMessageCaptionTextStyle: TextStyle
   sentMessageLinkDescriptionTextStyle: TextStyle
   sentMessageLinkTitleTextStyle: TextStyle
-  userAvatarTextStyle: TextStyle
+  userAvatarTextStyle: StyleProp<TextStyle>
   userNameTextStyle: TextStyle
 }
 

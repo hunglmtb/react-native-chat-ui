@@ -281,10 +281,8 @@ export const Chat = ({
           ? Math.floor(Math.min(size.width * 0.72, 440))
           : Math.floor(Math.min(size.width * 0.77, 440))
 
-      const roundBorder =
-        message.type !== 'dateHeader' && message.nextMessageInGroup
-      const showAvatar =
-        message.type !== 'dateHeader' && !message.nextMessageInGroup
+      const roundBorder = message.type !== 'dateHeader' && message.nextMessageInGroup
+      const showAvatar = message.type !== 'dateHeader' && !message.nextMessageInGroup
       const showName = message.type !== 'dateHeader' && message.showName
       const showStatus = message.type !== 'dateHeader' && message.showStatus
 
@@ -370,6 +368,7 @@ export const Chat = ({
             justifyContent: chatMessages.length !== 0 ? undefined : 'center',
             paddingTop: insets.bottom,
           },
+          theme.scroll?.contentFlatList || {}
         ]}
         initialNumToRender={10}
         ListEmptyComponent={renderListEmptyComponent}
@@ -378,7 +377,7 @@ export const Chat = ({
         ListHeaderComponentStyle={header}
         maxToRenderPerBatch={6}
         onEndReachedThreshold={0.75}
-        style={flatList}
+        style={[flatList, theme.scroll?.flatList || {}]}
         showsVerticalScrollIndicator={false}
         {...unwrap(flatListProps)}
         data={chatMessages}

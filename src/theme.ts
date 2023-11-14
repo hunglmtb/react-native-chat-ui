@@ -158,10 +158,9 @@ export const darkTheme: Theme = {
   },
   fonts: {
     ...defaultTheme.fonts,
-    dateDividerTextStyle: {
-      ...defaultTheme.fonts.dateDividerTextStyle,
+    dateDividerTextStyle: [defaultTheme.fonts.dateDividerTextStyle, {
       color: NEUTRAL_7,
-    },
+    }],
     receivedMessageBodyTextStyle: {
       ...defaultTheme.fonts.receivedMessageBodyTextStyle,
       color: NEUTRAL_7,

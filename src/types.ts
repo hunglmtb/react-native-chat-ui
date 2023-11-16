@@ -143,6 +143,7 @@ export interface Theme {
   scroll?: {
     flatList?: StyleProp<ViewStyle>
     contentFlatList?: StyleProp<ViewStyle>
+    emptyComponentContainer?: StyleProp<ViewStyle>
   }
   message?: {
     me?: {

@@ -1,6 +1,6 @@
 {
   "name": "@hunglmtb/react-native-chat-ui",
-  "version": "1.4.16",
+  "version": "1.4.18",
   "description": "Actively maintained, community-driven chat UI implementation with an optional Firebase BaaS.",
   "homepage": "https://flyer.chat",
   "repository": {
@@ -31,8 +31,8 @@
     "access": "public"
   },
   "scripts": {
-    "compile": "rmdir /s /q lib && mkdir lib && mkdir lib\\assets && tsc -p . && copy src\\assets\\*.png lib\\assets\\",
-    "cp": "rm -rf lib && tsc -p . && copyup src/assets/*.png lib",
+    "compile": "cross-env mkdir lib && mkdir lib\\assets && tsc -p . && copy src\\assets\\*.png lib\\assets\\",
+    "cp": "cross-env rm -rf lib && tsc -p . && copyup src/assets/*.png lib",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "yarn compile",
     "tsc": "tsc -p . ",

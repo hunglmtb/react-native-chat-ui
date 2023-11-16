@@ -331,7 +331,7 @@ export const Chat = ({
 
   const renderListEmptyComponent = React.useCallback(
     () => (
-      <View style={emptyComponentContainer}>
+      <View style={[emptyComponentContainer, theme.scroll?.emptyComponentContainer || {}]}>
         {oneOf(
           emptyState,
           <Text style={emptyComponentTitle}>
